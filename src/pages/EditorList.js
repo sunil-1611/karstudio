@@ -14,7 +14,6 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  TableFooter,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -27,7 +26,6 @@ import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "./components/Products/CloudUploadIcon";
 import Slider from "react-slick";
 import PlatePopup from './platePopup'
-import Footer from "../components/Layout/Footer";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -370,90 +368,65 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
           </Drawer>
         </Box>
       </Box>
-        <div className="edit-box">
-          <Box className="container">
-                <div class="project-header">
-                  <h2>My Project</h2>
-                  <div class="search-container">
-                      <input type="text" placeholder="Search for Projects" class="search-input" />
-                  </div>
-                  <button class="btn">+ New Project</button>
-              </div>
-
-            <div class="projects-cards">
-              <div>
-                <div class="project-card add-new">
-                    <div class="add-icon-container">
-                        <i className="upload-icon"></i>
-                        <span>Click here Start a New Project</span>
-                        <button class="add-btn">ADD</button>
-                    </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="project-card">
-                    <div className="img">
-                      <img src={LocalImages.CAR} alt="Car Image" class="car-image" />
-                    </div>
-                    <div class="project-details">
-                          <div className="left">
-                            <h3>Unnamed</h3>
-                            <div className="d-flex">
-                            <p><i className="calendar-icon"></i> 15.08.2024</p>
-                            <p><i class="upload-sm-icon"></i> 1 Uploads</p>
-                            </div>
-                          </div>
-                          
-                          <div className="btn-div">
-                            <button class="edit-btn">Edit <i className="caret-right-icon"></i></button>
-                          </div>
-                        </div>
-                </div>
-              </div>
-              
-                <div class="">
-                    <div class="project-card">
-                      <div className="img">
-                        <img src={LocalImages.CAR} alt="Car Image" class="car-image" />
-                      </div>
-                        <div class="project-details">
-                          <div className="left">
-                            <h3>Unnamed</h3>
-                            <div className="d-flex">
-                            <p><i className="calendar-icon"></i> 15.08.2024</p>
-                            <p><i class="upload-sm-icon"></i> 1 Uploads</p>
-                           </div>
-                          </div>
-                          
-                          <div className="btn-div">
-                            <button class="edit-btn">Edit <i className="caret-right-icon"></i></button>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
-              </div>
-              
-              
-              <div class="pagination-container">
-                  <label for="view-select">View</label>
-                  <select id="view-select">
-                      <option value="10">10</option>
-                      <option value="20">20</option>
-                      <option value="50">50</option>
-                  </select>
-                  <div class="pagination-controls">
-                      <span>1-1 of 1</span>
-                      <button class="pagination-btn prev"><i className="prev-icon"></i></button>
-                      <button class="pagination-btn next"><i className="next-icon"></i></button>
-                  </div>
-              </div>
-
-                  
-          </Box>
+      <Box className="container">
+        <Box className="editor-holder" sx={styles.editorholder}>
+        <div class="main-container">
+    <div class="project-header">
+        <h2>My Project</h2>
+        <div class="search-container">
+            <input type="text" placeholder="Search for Projects" class="search-input" />
         </div>
-      <Footer />
+        <button class="new-project-btn">+ New Project</button>
+    </div>
+
+    <div class="projects-grid">
+        <div class="project-card add-new">
+            <div class="add-icon-container">
+                <span>Click here Start a New Project</span>
+                <button class="add-btn">ADD</button>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <img src="car_image.png" alt="Car Image" class="car-image" />
+            <div class="project-details">
+                <h3>Unnamed</h3>
+                <p>15.08.2024</p>
+                <p><i class="uploads-icon"></i> 1 Uploads</p>
+                <button class="edit-btn">Edit</button>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <img src="car_image.png" alt="Car Image" class="car-image" />
+            <div class="project-details">
+                <h3>Unnamed</h3>
+                <p>15.08.2024</p>
+                <p><i class="uploads-icon"></i> 1 Uploads</p>
+                <button class="edit-btn">Edit</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination-container">
+        <label for="view-select">View</label>
+        <select id="view-select">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+        </select>
+        <div class="pagination-controls">
+            <span>1-1 of 1</span>
+            <button class="pagination-btn prev">&lt;</button>
+            <button class="pagination-btn next">&gt;</button>
+        </div>
+    </div>
+</div>
+
+              
+        </Box>
+      </Box>
+      {/* <PlatePopup /> */}
 
     </>
   );

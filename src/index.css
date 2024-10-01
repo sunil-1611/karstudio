@@ -224,6 +224,9 @@ h6,
     padding-top: 1.625rem;
     padding-bottom: 1.625rem;
 }
+.css-1q63s34{
+  padding-bottom: 62px;
+}
 .detailBtn {
   font-size: 0.85rem !important;
   line-height: 1.4363rem !important;
@@ -239,7 +242,159 @@ h6,
   .container {
     max-width: 540px;
   }
- 
+}
+/* -- */
+@media (max-width: 431px) {
+  .captivateInner{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .captivateInner .right {
+    width: 100% !important;
+  }
+  .captivateInner .left{
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  .upload-image{
+    flex-wrap: nowrap;
+    justify-content: flex-end !important;
+
+  }
+  .section-heading{
+    font-size: 26px !important;
+    line-height: 32px !important;
+  }
+  .css-mgl938 .coverCarlisting .slick-slider .slick-arrow.slick-next {
+    right: -1.625rem !important;
+    width: 16.33px;
+    height: 16.33px;  
+  }
+  .css-mgl938 .coverCarlisting .slick-slider .slick-arrow.slick-prev  {
+    left: -1.625rem !important; 
+    width: 16.33px;
+    height: 16.33px;
+  }
+  .photographyCove{
+    flex-direction: column;
+  }
+  .photographyCove .photography{
+    width: 100% !important;
+  }
+  .carText{
+    position: inherit !important;
+  }
+  .MuiBox-root .css-1xidi6h{
+    flex-direction: column-reverse !important;
+  }
+  .css-1xidi6h .carHolder {
+    width: 100% !important;
+}
+.css-1xidi6h .carText{
+  width: 100% !important;
+}
+.css-1xidi6h .carText::before{
+  position: inherit !important;
+}
+.css-lec6k5 .formholder{
+  flex-direction: column;
+}
+.css-lec6k5 .formholder .left {
+  width: 100% !important;
+  text-align: left;
+  padding: 12px 0 12px 0 !important;
+} 
+.css-lec6k5 .formholder .right{
+  width: 100% !important;
+  justify-content: center;
+}
+.css-lec6k5 .formholder .right .item {
+  width: calc(50% - -13.6rem) !important;
+}
+
+.css-10vbb9z .captivateInner .left .para, .css-lec6k5 .formholder .left .para {
+  font-size: 20px !important;
+  line-height: 30px !important;
+  font-weight: 300 !important;
+}
+.css-1q63s34 .subPara, .css-1a6lnq8 .subPara, .css-1xidi6h .carText .section-para{
+  font-size: 16px !important;
+  line-height: 32px !important;
+  font-weight: 300 !important;
+}
+/* .common-section .css-1a1kltw-MuiTypography-root img{
+  font-size: 10px;
+} */
+.common-section .MuiTypography-root h2{
+  font-size: 26px !important;
+  line-height: 32px !important;
+}
+.css-mgl938 .coverCarlisting .slick-slider .slick-list .slick-track .slick-slide >div .carholder img{
+  object-fit: contain !important;
+  height: 100px !important;
+}
+/* .css-mgl938 .coverCarlisting .slick-slider .slick-list{
+  height: 200px !important;
+} */
+.coverCarlisting .slick-slider .slick-list{
+  height: 100px !important;
+}
+.faqs .MuiAccordion-root .MuiAccordion-heading .MuiButtonBase-root {
+  padding: 0 10px !important;
+}
+.faqs .MuiAccordion-root .MuiAccordion-heading .MuiButtonBase-root .MuiAccordionSummary-content {
+  margin: 12px 0 !important;
+  font-size: 13px !important;
+  font-weight: 400;
+  line-height: 26px !important;
+}
+.MuiAccordionSummary-expandIconWrapper svg{
+  width: 5px !important;
+  height: 9px !important;
+}
+.css-1q63s34 .photographyCove .photography .title{
+  font-size: 13.44px !important;
+  line-height: 20.45px !important;
+}
+/* about */
+.MuiBox-root .css-1f0weao svg{
+  width: 305px !important;
+  height: 133px !important;
+}
+.MuiBox-root .css-1f0weao svg:last-child{
+  width: 191.76px !important;
+  height: 69.78px !important;
+}
+.css-1br1q0c .carholder .title{
+  font-size: 18px !important;
+}
+.css-1br1q0c .carholder .para {
+  font-size: 12px !important;
+  font-weight: 300 !important;
+  line-height: 13px !important;
+}
+.common-section .css-1a1kltw-MuiTypography-root, .common-section .css-u1gvlm-MuiTypography-root{
+  font-size: 14px !important;
+  line-height: 16.31px !important;
+}
+.common-section .css-bekqhi-MuiTypography-root{
+  font-size: 12px !important;
+  line-height: 16.31px !important;
+  font-weight: 400 !important;
+}
+.css-1ywfgu9-MuiTypography-root{
+  font-size: 25px !important;
+  line-height: 28.73px !important;
+  font-weight: 700 !important;
+}
+.css-1br1q0c .slick-arrow {
+  width: 35.33px !important;
+  height: 35.33px !important;
+}
+.slick-dots li button:before {
+  font-size: 11px !important;
+}
 }
 
 @media (min-width: 599px) {

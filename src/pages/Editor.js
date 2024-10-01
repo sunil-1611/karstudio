@@ -38,61 +38,16 @@ const VisuallyHiddenInput = styled("input")({
   whiteSpace: "nowrap",
   width: 1,
 });
-
-var upgradeSettings = {
-  dots: false,
-  arrows: false,
-  autoplay: false,
-  infinite: false,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  mobileFirst: true,
-  variableWidth: true,
-  responsive: [
-    {
-      breakpoint: 550,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
-var reviewSettings = {
-  dots: true,
-  arrows: true,
-  autoplay: false,
-  infinite: true,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  mobileFirst: true,
-  variableWidth: false,
-  centerMode: true,
-  responsive: [
-    {
-      breakpoint: 550,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
 const Editor = () => {
   var settings = {
     dots: false,
     arrows: true,
-    autoplay: false,
+    autoplay: true,
     infinite: true,
     autoplaySpeed: 3000,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 2,
     mobileFirst: true,
-    variableWidth: true,
-    // prevArrow: <img src={LocalImages.LEFTARROW} />,
-    // nextArrow: <img src={LocalImages.RIGHTARROW} />,
     responsive: [
       {
         breakpoint: 1172,
@@ -477,27 +432,6 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
                 </div>
               </Slider>
             </Box> */}
-
-            <div className="pic-slider">
-              <Slider {...settings}>
-                <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
-                </div>
-                <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
-                </div>
-                <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
-                </div>
-                <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
-                </div>
-              </Slider>
-            </div>
           </Box>
           <Box className="right-editor">
             <Accordion defaultExpanded>
@@ -583,30 +517,30 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
             </Accordion>
             <div style={{ display: "flex", alignItems: "center" }}>
   
-                <Box className="" sx={{ width: '50%', paddingRight:"15px"}}>
-                  <button className="btn-line" style={{ width: '100% '}}>
-                  DOWNLOAD SELECTED
-                  </button>
-                </Box>
+  <Box className="left-editor">
+    <Button className="downloadImage" sx={{ width: '26rem !important',
+  height: '3.2125rem !important',}}>
+     DOWNLOAD SELECTED
+    </Button>
+  </Box>
 
-                <Box className="" sx={{ width: '50%', paddingLeft:"15px"}}>
-                  <button className="btn" style={{ width: '100% '}}>
-                    Download All Images
-                  </button>
-                </Box>
-              </div>
+  <Box className="left-editor">
+    <Button className="addImage" sx={{ width: '26rem !important',
+  height: '3.2125rem !important',}}>
+      Download All Images
+    </Button>
+  </Box>
+</div>
 
 
 
           </Box>
         </Box>
       </Box>
-    
-
-<PlatePopup />
-
+      <PlatePopup />
       <Box sx={{ marginTop: 10}}><Footer /></Box>
       
+
     </>
   );
 };

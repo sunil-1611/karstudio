@@ -11,17 +11,14 @@ const platePopup = () => {
     </div>
     
      <form>
+      <div class="radio-group">
+        <input type="radio" id="keep-plate" name="plate-option" value="keep" checked />
+        <label for="keep-plate">Keep the licence plate</label>
+      </div>
 
-      <div className="radios">
-        <div class="radio">
-          <input type="radio" id="keep-plate" name="plate-option" value="keep" checked />
-          <label for="keep-plate"><span>Keep the licence plate</span></label>
-        </div>
-
-        <div class="radio">
-          <input type="radio" id="remove-add-logo" name="plate-option" value="remove" />
-          <label for="remove-add-logo"><span>Remove and add logo</span></label>
-        </div>
+      <div class="radio-group">
+        <input type="radio" id="remove-add-logo" name="plate-option" value="remove" />
+        <label for="remove-add-logo">Remove and add logo</label>
       </div>
 
        <div class="logo-upload">
@@ -32,8 +29,8 @@ const platePopup = () => {
       </div>
 
        <div class="popup-buttons">
-        <button type="button" class="cancel-btn btn-line">CANCEL</button>
-        <button type="submit" class="confirm-btn btn">CONFIRM</button>
+        <button type="button" class="cancel-btn">CANCEL</button>
+        <button type="submit" class="confirm-btn">CONFIRM</button>
       </div>
     </form>
   </div>
