@@ -436,6 +436,7 @@ margin: 0 10px;
 
 .pic-img{
   position: relative;
+  max-width: 140px;
 }
 
 .pic-img img{
@@ -1114,3 +1115,9 @@ margin: 0 10px;
 
 
   
+.left-editor .file-upload img{
+  aspect-ratio: 10/11;
+  object-fit: contain;
+  max-width: 100% !important;
+  border: 1px solid gainsboro;
+}

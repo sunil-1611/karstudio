@@ -70,8 +70,58 @@ const Editor = () => {
       },
     ],
   };
+
+  const list = [
+    {
+        "_id": "1c3c17e6220e4151b0d898de5f9e7b59",
+        "carStudio": {
+            "_id": "fa44572b64e941a9a64396ca01655ebc",
+            "afterStudioImages": [
+                {
+                    "afterStudioImageUrl": "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/saved332093bce91ba24bda424dc75d8ad4e73b2f1b4aad37d027f7dbfcc0553a2c81f03fbbe9-41f4-4ec7-8137-3bbadfe43aa1.png"
+                },
+                {
+                    "afterStudioImageUrl": "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/saveda619e1d8f2601ec95434603a68d65dfe96dfbd59b08213b2bd218aea92bbd1c199046334-4c81-4bb0-b9fd-650bb84661ec.png"
+                }
+            ]
+        }
+    },
+    {
+        "_id": "5ca73e6b0e47443b9d4944cc8d6500f1",
+        "carStudio": {
+            "_id": "20792e099ec64d21b3362c2b104e5383",
+            "afterStudioImages": [
+                {
+                    "afterStudioImageUrl": "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/savedfaf8357274fbd495733d01e7b1328087b59688d75140dbb26e347f1ec2f6ee165ec64ae9-5c85-40a2-b23a-f61fe153e7c2.png"
+                }
+            ]
+        }
+    },
+    {
+        "_id": "a42f789fa44e401ebc0e2665ee791b5b",
+        "carStudio": {
+            "_id": "106bcefe822c41d98d7aef87db346647",
+            "afterStudioImages": [
+                {
+                    "afterStudioImageUrl": "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/saved752cdbdab8aa1f6addc17e55d31a4fdd6bec829edf64655b84c9d4c230e7969af8dcf271-5eec-46a0-9989-7d540ae622b9.png"
+                }
+            ]
+        }
+    },
+    {
+        "_id": "ba8a912e819c406bbc3d1b2e5e66d562",
+        "carStudio": {
+            "_id": "299889214f75435fb733bf725ba48721",
+            "afterStudioImages": [
+                {
+                    "afterStudioImageUrl": "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/savedc4fe61f5fc902582642ead02496372f564c68ee8ff94a79a06c5d0392c1f0ed1ffae2a5a-de46-4c13-a43a-6051bb26a7d6.jpg"
+                }
+            ]
+        }
+    }
+];
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [editorList, setEditorList] = useState([]);
+  const [editorList, setEditorList] = useState(list);
   const [totalCredits, setTotalCredits] = useState(null);
    const [credits, setCredits] = useState(null);
   const [error, setError] = useState(null);
@@ -125,10 +175,10 @@ const requestOptions = {
   redirect: "follow"
 };
 
-fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
-  .then((response) => response.json())
-  .then((result) => setEditorList(result?.content))
-  .catch((error) => console.error(error));
+// fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
+//   .then((response) => response.json())
+//   .then((result) => setEditorList(result?.content))
+//   .catch((error) => console.error(error));
   }
   //handle menu click
 

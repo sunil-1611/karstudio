@@ -59,9 +59,9 @@ const [openPlate, setOpenPlate] = useState(false)
     dots: false,
     arrows: true,
     autoplay: false,
-    infinite: true,
+    infinite: false,
     autoplaySpeed: 3000,
-    slidesToShow: 4,
+    slidesToShow: 1,
     slidesToScroll: 1,
     mobileFirst: true,
     variableWidth: true,
@@ -71,7 +71,7 @@ const [openPlate, setOpenPlate] = useState(false)
       {
         breakpoint: 1172,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
           centerMode: false,
         },
@@ -313,8 +313,7 @@ console.log('***dsfsdfds23', hideAddImage)
                 })}
                
                 <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
+                 
                 </div>
                
               </Slider>
