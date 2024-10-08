@@ -18,8 +18,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import '../editor.css'
-
+import { useNavigate } from "react-router-dom";
 import styles from "../pages/styles/HeaderStyle";
 // import styles from "../../pages/styles/HeaderStyle";
 import LocalImages from "../assets/images";
@@ -30,6 +29,7 @@ import CloudUploadIcon from "./components/Products/CloudUploadIcon";
 import Slider from "react-slick";
 import PlatePopup from './platePopup'
 import Footer from "../components/Layout/Footer";
+import Header from "../components/Editor/Header";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -42,6 +42,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 const Editor = () => {
+  const navigate = useNavigate()
   var settings = {
     dots: false,
     arrows: true,
@@ -70,6 +71,8 @@ const Editor = () => {
     ],
   };
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [editorList, setEditorList] = useState([]);
+  const [totalCredits, setTotalCredits] = useState(null);
    const [credits, setCredits] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -91,8 +94,8 @@ const Editor = () => {
       };
       
       fetch("https://tokyo.carstudio.ai/webEditor/remainingCredits", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
+        .then((response) => response.json())
+        .then((result) => setTotalCredits(result?.return?.totalCredits))
         .catch((error) => console.error(error));
       }
     
@@ -101,8 +104,7 @@ const Editor = () => {
     handleFetchBackgroundImages()
   }, []);
 
-  console.log('***dsjdsd', credits)
-
+ 
   // UI for the component
 
   const handleFetchBackgroundImages = () => {
@@ -124,8 +126,8 @@ const requestOptions = {
 };
 
 fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
+  .then((response) => response.json())
+  .then((result) => setEditorList(result?.content))
   .catch((error) => console.error(error));
   }
   //handle menu click
@@ -133,6 +135,8 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  console.log('***djsdjjsd', totalCredits)
 
   //menu drawer
   const drawer = (
@@ -186,192 +190,16 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
             <Link to={"/About"}>KarStudio Guide</Link>
           </MenuItem>
           <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
+            <Link to={"/package"}>Try KarStudio</Link>
           </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
+          
         </MenuList>
       </Paper>
     </Box>
   );
   return (
     <>
-      <Box>
-        <AppBar sx={styles.navbar} component={"nav"}>
-          <Box className="container">
-            <Toolbar>
-              <Box className="headerCover">
-                <Button
-                  aria-label="open drawer"
-                  edge="start"
-                  sx={{
-                    display: {
-                      xs: "block",
-                      sm: "none",
-                      color: "white",
-                      padding: "0",
-                      cursor: "pointer",
-                      minWidth: "auto",
-                      "&:hover": { backgroundColor: "transparent" },
-                    },
-                  }}
-                  onClick={handleDrawerToggle}
-                >
-                  <MenuIcon />
-                </Button>
-                <Link className="logo">
-                  {" "}
-                  <img alt="test" src={LocalImages.LOGO} />
-                </Link>
-              </Box>
-              <Button
-                sx={{ display: { xs: "block", sm: "none" } }}
-                className="backtoBtn"
-                variant="contained"
-                to={"/"}
-              >
-                Back to KarKiosk
-              </Button>
-              <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                <Box className="navbarStyle">
-                  <Button className="outlinedBtn" variant="contained" to={"/"}>
-                    Available Credits
-                  </Button>
-                  <Button className="outlinedBtn" variant="contained" to={"/"}>
-                    Add Credit
-                    <PlusIcon />
-                  </Button>
-                  <Avatar>
-                    <img alt="test" src={LocalImages.USER} />
-                  </Avatar>
-                </Box>
-              </Box>
-            </Toolbar>
-          </Box>
-        </AppBar>
-        <Box component="nav">
-          <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            sx={{
-              display: {
-                xs: "block",
-                sm: "none",
-                ".MuiDrawer-paper": {
-                  width: "100%",
-                  maxWidth: "70%",
-                  height: "100%",
-                  ".mobileMenu": {
-                    padding: "0",
-                    height: "100%",
-                    ".MuiPaper-root": {
-                      boxShadow: "none",
-                      borderRadius: "0",
-                      height: "calc(100vh - 5.3rem)",
-                      overflow: "auto",
-                      padding: "0 1rem 1rem 1rem",
-                      "&::-webkit-scrollbar": {
-                        width: ".25rem",
-                        height: ".25rem",
-                      },
-                      "&::-webkit-scrollbar-track": {
-                        background: "var(--maroon521A)",
-                      },
-
-                      "&::-webkit-scrollbar-thumb": {
-                        width: ".25rem",
-                        height: ".25rem",
-                        background: "var(--primary)",
-                        borderRadius: "0",
-                      },
-                      ".MuiList-root": {
-                        padding: "0",
-                        margin: "0",
-                        // display:"inline-flex",
-                        // columnGap:"1rem",
-                        // flexWrap:"wrap",
-                        ".MuiMenuItem-gutters": {
-                          padding: "0",
-                          marginBottom: "1rem",
-                          minHeight: "inherit",
-                          "&:hover": {
-                            backgroundColor: "transparent",
-                          },
-                          "&:last-child": {
-                            marginBottom: "0",
-                          },
-                          ".MuiTypography-inherit": {
-                            textDecoration: "none",
-                            color: "var(--black)",
-                            "&:hover": {
-                              color: "var(--primary)",
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Box>
-      </Box>
+      <Header />
         <div className="edit-box">
           <Box className="container">
                 <div class="project-header">
@@ -379,7 +207,9 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
                   <div class="search-container">
                       <input type="text" placeholder="Search for Projects" class="search-input" />
                   </div>
-                  <button class="btn">+ New Project</button>
+                  <button style={{ cursor: 'pointer'}}  onClick={() =>{
+                    navigate('/editor/new')
+                  }} class="btn">+ New Project</button>
               </div>
 
             <div class="projects-cards">
@@ -388,52 +218,42 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
                     <div class="add-icon-container">
                         <i className="upload-icon"></i>
                         <span>Click here Start a New Project</span>
-                        <button class="add-btn">ADD</button>
+                        <button  onClick={() =>{
+                    navigate('/editor/new')
+                  }} class="add-btn">ADD</button>
                     </div>
                 </div>
               </div>
-
-              <div>
-                <div class="project-card">
-                    <div className="img">
-                      <img src={LocalImages.CAR} alt="Car Image" class="car-image" />
-                    </div>
-                    <div class="project-details">
-                          <div className="left">
-                            <h3>Unnamed</h3>
-                            <div className="d-flex">
-                            <p><i className="calendar-icon"></i> 15.08.2024</p>
-                            <p><i class="upload-sm-icon"></i> 1 Uploads</p>
+              {editorList?.length > 0 && editorList.map((item, index) => {
+                console.log('***jdjsdjs', item?.carStudio?.afterStudioImages[0].afterStudioImageUrl)
+                return(
+                  <div key={index}>
+                  <div class="project-card">
+                      <div className="img">
+                        <img src={item?.carStudio?.afterStudioImages[0].afterStudioImageUrl} alt="Car Image" class="car-image" />
+                      </div>
+                      <div class="project-details">
+                            <div className="left">
+                              <h3>Unnamed</h3>
+                              <div className="d-flex">
+                              <p><i className="calendar-icon"></i> 15.08.2024</p>
+                              <p><i class="upload-sm-icon"></i> {item?.carStudio?.afterStudioImages.length > 0 ? item?.carStudio?.afterStudioImages.length : 1} Uploads</p>
+                              </div>
+                            </div>
+                            
+                            <div className="btn-div">
+ 
+                              <button onClick={() =>  navigate('/editor/new', { state: { index } })} class="edit-btn">Edit <i className="caret-right-icon"></i></button>
                             </div>
                           </div>
-                          
-                          <div className="btn-div">
-                            <button class="edit-btn">Edit <i className="caret-right-icon"></i></button>
-                          </div>
-                        </div>
+                  </div>
                 </div>
-              </div>
+                )
+              })}
+
+             
               
-                <div class="">
-                    <div class="project-card">
-                      <div className="img">
-                        <img src={LocalImages.CAR} alt="Car Image" class="car-image" />
-                      </div>
-                        <div class="project-details">
-                          <div className="left">
-                            <h3>Unnamed</h3>
-                            <div className="d-flex">
-                            <p><i className="calendar-icon"></i> 15.08.2024</p>
-                            <p><i class="upload-sm-icon"></i> 1 Uploads</p>
-                           </div>
-                          </div>
-                          
-                          <div className="btn-div">
-                            <button class="edit-btn">Edit <i className="caret-right-icon"></i></button>
-                          </div>
-                        </div>
-                    </div>
-                </div>
+            
 
               </div>
               

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import {
   AppBar,
   Box,
@@ -15,6 +16,7 @@ import LocalImages from "../../assets/images";
 import MenuIcon from "../../pages/components/Products/Menu";
 
 const Header = () => {
+  const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false);
   //handle menu click
 
@@ -37,7 +39,7 @@ const Header = () => {
           //minHeight:"5rem",
         }}
       >
-        <Link className="logo" sx={{ width: "100%" }}>
+        <Link to="/" className="logo" sx={{ width: "100%" }}>
           {" "}
           <img style={{ width: "100%" }} alt="test" src={LocalImages.LOGO} />
         </Link>
@@ -71,57 +73,12 @@ const Header = () => {
       <Paper sx={{}}>
         <MenuList sx={{ display: "block" }}>
           <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
+            <Link to={"/guide"}>KarStudio Guide</Link>
           </MenuItem>
           <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
+            <Link to={"/package"}>Try KarStudio</Link>
           </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem><MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
+         
         </MenuList>
       </Paper>
     </Box>
@@ -151,7 +108,9 @@ const Header = () => {
                 >
                   <MenuIcon />
                 </Button>
-                <Link className="logo">
+                <Link sx={{ cursor: "pointer"}} onClick={() =>{
+                          navigate('/')
+                        }} to="/"className="logo">
                   {" "}
                   <img alt="test" src={LocalImages.LOGO} />
                 </Link>
@@ -169,17 +128,25 @@ const Header = () => {
                   <Paper>
                     <MenuList sx={{ display: "flex" }}>
                       <MenuItem>
-                        <Link to={"/About"}>KarStudio Guide</Link>
+                        <Link onClick={() =>{
+                          navigate('/guide')
+                        }} to={"/guide"}>KarStudio Guide</Link>
                       </MenuItem>
                       <MenuItem>
-                        <Link to={"/Edito"}>Editor</Link>
+                        <Link onClick={() =>{
+                          navigate('/editor')
+                        }}to={"/editor"}>Editor</Link>
                       </MenuItem>
                       <MenuItem>
-                        <Link to={"/Contact"}>Try KarStudio</Link>
+                        <Link onClick={() =>{
+                          navigate('/package')
+                        }} to={"/package"}>Try KarStudio</Link>
                       </MenuItem>
                     </MenuList>
                   </Paper>
-                  <Button className="backtoBtn" variant="contained" to={"/"}>
+                  <Button onClick={() =>{
+                          navigate('/')
+                        }} className="backtoBtn" variant="contained" to={"/"}>
                     Back to KarKiosk
                   </Button>
                 </Box>

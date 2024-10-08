@@ -10,18 +10,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import slickStyle from "./components/SlickSlider/slickstyle";
 import LocalImages from "../assets/images";
 import ArrowDown from "./components/Products/Arrowdown";
 import UploadFile from "./components/Products/UploadFile";
 import { styled } from "@mui/material/styles";
+import {isMobile} from 'react-device-detect';
 
 const About = () => {
   var settings = {
     dots: false,
     arrows: true,
-    autoplay: true,
+    autoplay: false,
     infinite: true,
     autoplaySpeed: 3000,
     slidesToShow: 2,
@@ -83,6 +85,7 @@ const About = () => {
     whiteSpace: "nowrap",
     width: 1,
   });
+  const navigate = useNavigate()
   return (
     <Layout>
       {/* Captivate Buyers with Stunning Car Photos! */}
@@ -100,7 +103,9 @@ const About = () => {
                 the hassle out of creating professional car listings. Transform
                 Your Car Listings with: AI-Enhanced Photos!
               </Typography>
-
+              {isMobile && <Box className="right">
+              <img alt="test" src={LocalImages.SLIDEIMG} />
+            </Box>}
               <Box className="uploadSection">
                 <Box sx={{ minHeight: "9.8788rem" }}>
                   <Typography
@@ -114,6 +119,9 @@ const About = () => {
                     Give KarStudio a Try
                   </Typography>
                   <Button
+                  onClick={() =>{
+                    navigate('/editor')
+                  }}
                     sx={{
                       marginTop: "4.86rem",
                       backgroundColor: "var(--primary)",
@@ -131,11 +139,11 @@ const About = () => {
                     startIcon={<UploadFile />}
                   >
                     Upload an image
-                    <VisuallyHiddenInput
+                    {/* <VisuallyHiddenInput
                       type="file"
                       onChange={(event) => console.log(event.target.files)}
                       multiple
-                    />
+                    /> */}
                   </Button>
                 </Box>
               </Box>
@@ -166,9 +174,9 @@ const About = () => {
               <img alt="test" src={LocalImages.IMGG5} />
               </Box>
             </Box>
-            <Box className="right">
+            {!isMobile && <Box className="right">
               <img alt="test" src={LocalImages.SLIDEIMG} />
-            </Box>
+            </Box>}
           </Box>
         </Box>
       </Box>
@@ -192,16 +200,16 @@ const About = () => {
               </Box>
               <Slider {...settings}>
                 <div className="carholder">
-                  <img alt="test" src={LocalImages.BEFORE} />
+                  <img style={{borderRadius: '19px'}}alt="test" src={LocalImages.BEFORE} />
                 </div>
                 <div className="carholder">
-                  <img alt="test" src={LocalImages.AFTER} />
+                  <img style={{borderRadius: '19px'}} alt="test" src={LocalImages.AFTER} />
                 </div>
                 <div className="carholder">
-                  <img alt="test" src={LocalImages.BEFORE} />
+                  <img style={{borderRadius: '19px'}} alt="test" src={LocalImages.BEFORE} />
                 </div>
                 <div className="carholder">
-                  <img alt="test" src={LocalImages.AFTER} />
+                  <img style={{borderRadius: '19px'}} alt="test" src={LocalImages.AFTER} />
                 </div>
               </Slider>
             </Box>

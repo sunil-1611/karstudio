@@ -17,7 +17,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import '../editor.css'
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../pages/styles/HeaderStyle";
 // import styles from "../../pages/styles/HeaderStyle";
 import LocalImages from "../assets/images";
@@ -28,6 +28,9 @@ import CloudUploadIcon from "./components/Products/CloudUploadIcon";
 import Slider from "react-slick";
 import PlatePopup from './platePopup'
 import Footer from "../components/Layout/Footer";
+import Header from "../components/Editor/Header";
+import { saveAs } from 'file-saver'
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -40,48 +43,18 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-var upgradeSettings = {
-  dots: false,
-  arrows: false,
-  autoplay: false,
-  infinite: false,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  mobileFirst: true,
-  variableWidth: true,
-  responsive: [
-    {
-      breakpoint: 550,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
-var reviewSettings = {
-  dots: true,
-  arrows: true,
-  autoplay: false,
-  infinite: true,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  mobileFirst: true,
-  variableWidth: false,
-  centerMode: true,
-  responsive: [
-    {
-      breakpoint: 550,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
 const Editor = () => {
+  const location = useLocation()
+  const [isImageUpload, setIsImageUpload]  = useState(false)
+  const [uploadedImages, setUploadedImages] = useState([]); // State to hold multiple image URLs
+  const [selectedImage, setSelectedImage] = useState(null); // State to hold multiple image URLs
+  const [finalImage, setFinalImage] = useState(null); // State to hold multiple image URLs
+  const [editorList, setEditorList] = useState([]);
+  const [hideAddImage, setHideAddImage] = useState(false);
+const [openPlate, setOpenPlate] = useState(false)
+  const [isAddImage, setIsAddImage] = useState(false); // State to store uploaded image
+
+  const navigate = useNavigate()
   var settings = {
     dots: false,
     arrows: true,
@@ -89,7 +62,7 @@ const Editor = () => {
     infinite: true,
     autoplaySpeed: 3000,
     slidesToShow: 4,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
     mobileFirst: true,
     variableWidth: true,
     // prevArrow: <img src={LocalImages.LEFTARROW} />,
@@ -107,46 +80,13 @@ const Editor = () => {
         breakpoint: 769,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
         },
       },
     ],
   };
-  const [mobileOpen, setMobileOpen] = useState(false);
-   const [credits, setCredits] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  // Function to handle drawer toggle
- 
 
-  // API call using useEffect
-  useEffect(() => {
-    const fetchCredits = async () => {
-      const myHeaders = new Headers();
-      myHeaders.append("apiKey", "CgbmPwqMQNUZzeHAJYAreHKtT");
-      myHeaders.append("Cookie", "JSESSIONID=MDA5ZjM2ZWEtZWVmNC00YTY1LWFkNzEtM2RhYjliM2YyYzIz");
-      
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        redirect: "follow"
-      };
-      
-      fetch("https://tokyo.carstudio.ai/webEditor/remainingCredits", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
-      }
-    
-
-    fetchCredits();
-    handleFetchBackgroundImages()
-  }, []);
-
-  console.log('***dsjdsd', credits)
-
-  // UI for the component
 
   const handleFetchBackgroundImages = () => {
     const myHeaders = new Headers();
@@ -167,254 +107,123 @@ const requestOptions = {
 };
 
 fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
+  .then((response) => response.json())
+  .then((result) => {
+    setEditorList(result?.content)
+    let imageUrlObj = null;
+if(location?.state?.index === 0 || location?.state?.index){
+   imageUrlObj = result?.content[location?.state?.index]?.carStudio?.afterStudioImages[0].afterStudioImageUrl
+   setFinalImage(imageUrlObj)
+   setUploadedImages([imageUrlObj])
+   setIsImageUpload(true)
+   setIsAddImage(true)
+   setHideAddImage(true)
+   setFinalImage(imageUrlObj)
+
+}
+  })
   .catch((error) => console.error(error));
   }
-  //handle menu click
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  console.log('***djsjdjsd', editorList)
+   
+  useEffect(() => {
+    handleFetchBackgroundImages()
+  }, [location?.state?.index])
+
+  // UI for the component
+
+  const handleUploadImageApi = () => {
+    // const myHeaders = new Headers();
+    // myHeaders.append("apiKey", "CgbmPwqMQNUZzeHAJYAreHKtT");
+    // myHeaders.append("Cookie", "JSESSIONID=MTJkMmViNTItMzdhZi00NDhjLWE4ZTctZTkyZTk4Nzg1ZjMx");
+    
+    // const formdata = new FormData();
+    // formdata.append("images[0].fileUrl", "https://img.freepik.com/free-psd/realistic-car-illustration_23-2151227613.jpg");
+    // formdata.append("images[0].position", "FRONT");
+    // formdata.append("plateImageUrl", "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/saved332093bce91ba24bda424dc75d8ad4e73b2f1b4aad37d027f7dbfcc0553a2c81f03fbbe9-41f4-4ec7-8137-3bbadfe43aa1.png");
+    
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: formdata,
+    //   redirect: "follow"
+    // };
+    const result = {
+      "success": true,
+      "code": "0004",
+      "time": "2024-10-08T11:26:24.028+00:00",
+      "return": {
+          "orderId": "ba8a912e819c406bbc3d1b2e5e66d562",
+          "carStudioId": "7063da7e-1302-4077-9e97-4fd91c17e70d",
+          "afterStudioImages": [
+              {
+                  "imageUrl": "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/saved752cdbdab8aa1f6addc17e55d31a4fdd6bec829edf64655b84c9d4c230e7969af8dcf271-5eec-46a0-9989-7d540ae622b9.png",
+                  "position": "FRONT"
+              }
+          ]
+      }
+  }
+if(result?.return?.afterStudioImages && result?.return?.afterStudioImages.length  > 0){
+  setFinalImage(result?.return?.afterStudioImages[0]?.imageUrl)
+  setIsAddImage(true)
+
+}
+    
+    // fetch("https://tokyo.carstudio.ai/webEditor/uploadImagesWithUrlV2", requestOptions)
+    //   .then((response) => response.text())
+    //   .then((result) => setTotalCredits(result?.return?.afterStudioImages))
+    //   .catch((error) => console.error(error));
+  }
+
+  const handleImageUpload = (event) => {
+    
+    const files = Array.from(event.target.files); // Convert FileList to array
+    if (files.length > 0) {
+      setIsImageUpload(true);
+      const imageUrls = files.map((file) => URL.createObjectURL(file)); // Create URLs for all uploaded files
+      if(uploadedImages.length === 0){
+        setSelectedImage(imageUrls)
+      }
+      setUploadedImages((prevImages) => [...prevImages, ...imageUrls]); // Append the new images to the existing state
+    }
   };
 
-  //menu drawer
-  const drawer = (
-    <Box className="mobileMenu" onClick={handleDrawerToggle}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "1rem",
-          boxShadow: "0px 4px 4px 0px #00000040",
-          padding: "1rem",
-          marginBottom: "1rem",
-          //minHeight:"5rem",
-        }}
-      >
-        <Link className="logo" sx={{ width: "100%" }}>
-          {" "}
-          <img style={{ width: "100%" }} alt="test" src={LocalImages.LOGO} />
-        </Link>
-        <Button
-          sx={{
-            display: {
-              xs: "block",
-              sm: "none",
-              fontSize: "0.85rem",
-              lineHeight: "1.1363rem",
-              fontWeight: "700",
-              backgroundColor: "var(--primary)",
-              boxShadow: "none",
-              padding: "0.475rem",
-              borderRadius: ".625rem",
-              color: "var(--white)",
-              border: "2px solid var(--primary)",
-              textTransform: "capitalize",
-              whiteSpace: "pre",
-              width: "100%",
-              textAlign: "center",
-            },
-          }}
-          className="backtoBtn"
-          variant="contained"
-          to={"/"}
-        >
-          Back to KarKiosk
-        </Button>
-      </Box>
-      <Paper sx={{}}>
-        <MenuList sx={{ display: "block" }}>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/About"}>KarStudio Guide</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to={"/Contact"}>Try KarStudio</Link>
-          </MenuItem>
-        </MenuList>
-      </Paper>
-    </Box>
-  );
+
+ 
+// Function to remove an image based on its index
+const removeImage = (index) => {
+  setUploadedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+};
+
+const getCurrentDate = () => {
+  const date = new Date();
+  
+  // Get day, month, and year
+  const day = String(date.getDate()).padStart(2, '0'); // Pads single digit days with leading zero
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed, so add 1
+  const year = date.getFullYear();
+  
+  return `${day}.${month}.${year}`;
+};
+
+const downloadImage = (imageUrl, imageName) => {
+  
+  const link = document.createElement('a');
+  link.href = imageUrl;
+  link.download = imageName;  // Name the file for download
+  document.body.appendChild(link);  // Append the link to the DOM
+  link.click();  // Simulate a click event on the link
+  document.body.removeChild(link);  // Remove the link after download
+};
+
+
+console.log('***dsfsdfds23', hideAddImage)
+
+ 
   return (
     <>
-      <Box>
-        <AppBar sx={styles.navbar} component={"nav"}>
-          <Box className="container">
-            <Toolbar>
-              <Box className="headerCover">
-                <Button
-                  aria-label="open drawer"
-                  edge="start"
-                  sx={{
-                    display: {
-                      xs: "block",
-                      sm: "none",
-                      color: "white",
-                      padding: "0",
-                      cursor: "pointer",
-                      minWidth: "auto",
-                      "&:hover": { backgroundColor: "transparent" },
-                    },
-                  }}
-                  onClick={handleDrawerToggle}
-                >
-                  <MenuIcon />
-                </Button>
-                <Link className="logo">
-                  {" "}
-                  <img alt="test" src={LocalImages.LOGO} />
-                </Link>
-              </Box>
-              <Button
-                sx={{ display: { xs: "block", sm: "none" } }}
-                className="backtoBtn"
-                variant="contained"
-                to={"/"}
-              >
-                Back to KarKiosk
-              </Button>
-              <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                <Box className="navbarStyle">
-                  <Button className="outlinedBtn" variant="contained" to={"/"}>
-                    Available Credits
-                  </Button>
-                  <Button className="outlinedBtn" variant="contained" to={"/"}>
-                    Add Credit
-                    <PlusIcon />
-                  </Button>
-                  <Avatar>
-                    <img alt="test" src={LocalImages.USER} />
-                  </Avatar>
-                </Box>
-              </Box>
-            </Toolbar>
-          </Box>
-        </AppBar>
-        <Box component="nav">
-          <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            sx={{
-              display: {
-                xs: "block",
-                sm: "none",
-                ".MuiDrawer-paper": {
-                  width: "100%",
-                  maxWidth: "70%",
-                  height: "100%",
-                  ".mobileMenu": {
-                    padding: "0",
-                    height: "100%",
-                    ".MuiPaper-root": {
-                      boxShadow: "none",
-                      borderRadius: "0",
-                      height: "calc(100vh - 5.3rem)",
-                      overflow: "auto",
-                      padding: "0 1rem 1rem 1rem",
-                      "&::-webkit-scrollbar": {
-                        width: ".25rem",
-                        height: ".25rem",
-                      },
-                      "&::-webkit-scrollbar-track": {
-                        background: "var(--maroon521A)",
-                      },
-
-                      "&::-webkit-scrollbar-thumb": {
-                        width: ".25rem",
-                        height: ".25rem",
-                        background: "var(--primary)",
-                        borderRadius: "0",
-                      },
-                      ".MuiList-root": {
-                        padding: "0",
-                        margin: "0",
-                        // display:"inline-flex",
-                        // columnGap:"1rem",
-                        // flexWrap:"wrap",
-                        ".MuiMenuItem-gutters": {
-                          padding: "0",
-                          marginBottom: "1rem",
-                          minHeight: "inherit",
-                          "&:hover": {
-                            backgroundColor: "transparent",
-                          },
-                          "&:last-child": {
-                            marginBottom: "0",
-                          },
-                          ".MuiTypography-inherit": {
-                            textDecoration: "none",
-                            color: "var(--black)",
-                            "&:hover": {
-                              color: "var(--primary)",
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Box>
-      </Box>
+       <Header />
       <Box className="container">
         <Box className="editor-holder" sx={styles.editorholder}>
           <Box className="left-editor">
@@ -426,8 +235,8 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
               }}
             >
               <Box className="innerbtn">
-                <Button className="addImage">Return to Projects </Button>{" "}
-                <Typography
+                <Button onClick={() => navigate('/editor')}className="addImage">Return to Projects </Button>{" "}
+                {isImageUpload ?  <Typography
                   sx={{
                     fontSize: "1.25rem",
                     lineHeight: "1.4363rem",
@@ -435,16 +244,44 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
                     color: "rgba(0, 0, 0, 0.5)",
                   }}
                 >
-                  16.08.2024 - 1 Upload
-                </Typography>
+                  {getCurrentDate()} - {uploadedImages?.length} Upload
+                </Typography> : <Typography
+                  sx={{
+                    fontSize: "1.25rem",
+                    lineHeight: "1.4363rem",
+                    fontWeight: "500",
+                    color: "rgba(0, 0, 0, 0.5)",
+                  }}
+                >
+                 </Typography>}
               </Box>
-              <Button className="addImage" style={{ marginLeft: '85px', padding: "1rem 1.75rem" }}>
+             {(isImageUpload && !hideAddImage) ?  <Button className="addImage" onClick={() => {
+             
+              setOpenPlate(true)
+              
+             }}style={{ marginLeft: '85px', padding: "1rem 1.75rem"  }}>
                 Add Image
-              </Button>
+              </Button> : <Typography sx={{ marginLeft: '85px', padding: "1rem 12.50rem" }}></Typography>}
             </Box>
 
             <Box className="file-upload">
-              <Button
+            {/* <img
+            src={LocalImages.BackG}
+            alt="Background Image"
+          /> */}
+            {(isAddImage && uploadedImages) ? 
+           
+                <img
+              src={finalImage}
+               alt="Uploaded Preview"
+                    style={{
+                        width: '824px',
+                      height: 'auto',
+                      objectFit: 'contain'
+                    }}
+            />
+                :     
+               <Button
                 component="label"
                 role={undefined}
                 variant="contained"
@@ -456,49 +293,33 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
                 <span className="browse">BROWSE FILES</span>
                 <VisuallyHiddenInput
                   type="file"
-                  onChange={(event) => console.log(event.target.files)}
+                  onChange={handleImageUpload} // Attach the upload handler here
                   multiple
                 />
-              </Button>
+              </Button> }
             </Box>
 
-            {/* <Box sx={{overflow:"hidden"}}>
-            <Slider {...settings}>
-                <div className="carholder">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                </div>
-                <div className="carholder">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                </div>
-                <div className="carholder">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                </div>
-                <div className="carholder">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                </div>
-              </Slider>
-            </Box> */}
+            
 
-            <div className="pic-slider">
-              <Slider {...settings}>
+            {uploadedImages &&uploadedImages.length > 0 &&  <div className="pic-slider">
+              <Slider  {...settings}>
+                {uploadedImages && uploadedImages.map((image, index) => {
+                  return(
+                    <div className="pic-img" >
+                    <img alt="test" src={image} />
+                    <button onClick={() => removeImage(index)}><i className="cross-icon"></i></button>
+                  </div>
+                  )
+                })}
+               
                 <div className="pic-img">
                   <img alt="test" src={LocalImages.BEFORECAR} />
                   <button><i className="cross-icon"></i></button>
                 </div>
-                <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
-                </div>
-                <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
-                </div>
-                <div className="pic-img">
-                  <img alt="test" src={LocalImages.BEFORECAR} />
-                  <button><i className="cross-icon"></i></button>
-                </div>
+               
               </Slider>
-            </div>
+            </div>}
+
           </Box>
           <Box className="right-editor">
             <Accordion defaultExpanded>
@@ -511,6 +332,7 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
               <AccordionDetails>
                 <Box className="images-holder">
                   <Box className="iteam addplus">
+
                     <svg
                       width="42"
                       height="42"
@@ -585,13 +407,13 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
             <div style={{ display: "flex", alignItems: "center" }}>
   
                 <Box className="" sx={{ width: '50%', paddingRight:"15px"}}>
-                  <button className="btn-line" style={{ width: '100% '}}>
+                  <button onClick={() => downloadImage(finalImage, 'Karstudio.jpg')}className="btn-line" style={{ width: '100% ', cursor: 'pointer'}}>
                   DOWNLOAD SELECTED
                   </button>
                 </Box>
 
                 <Box className="" sx={{ width: '50%', paddingLeft:"15px"}}>
-                  <button className="btn" style={{ width: '100% '}}>
+                  <button onClick={() => downloadImage(finalImage, 'Karstudio.jpg')}className="btn" style={{ width: '100% ',cursor: 'pointer'}}>
                     Download All Images
                   </button>
                 </Box>
@@ -604,7 +426,7 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
       </Box>
     
 
-<PlatePopup />
+     {openPlate && <PlatePopup setOpenPlate={setOpenPlate} onConfirm={() =>  handleUploadImageApi()} />}
 
       <Box sx={{ marginTop: 10}}><Footer /></Box>
       

@@ -1,6 +1,6 @@
 
 import LocalImages from "../assets/images" 
-const platePopup = () => {
+const platePopup = ({setOpenPlate, onConfirm}) => {
    return  <div id="license-popup" class="popup-container">
   <div class="popup">
     <h2>Would you like to remove the licence plate?</h2>
@@ -32,8 +32,16 @@ const platePopup = () => {
       </div>
 
        <div class="popup-buttons">
-        <button type="button" class="cancel-btn btn-line">CANCEL</button>
-        <button type="submit" class="confirm-btn btn">CONFIRM</button>
+        <button  onClick={() => setOpenPlate(false)}type="button" class="cancel-btn btn-line">CANCEL</button>
+           <button onClick={(e) => {
+
+             e.preventDefault()
+             onConfirm()
+             setTimeout(() => {
+setOpenPlate(false)
+             }, 100)
+
+           }} type="submit" class="confirm-btn btn">CONFIRM</button>
       </div>
     </form>
   </div>

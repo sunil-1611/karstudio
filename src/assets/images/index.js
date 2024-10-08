@@ -94,9 +94,6 @@ import Discover from "../images/discover.png";
 import Paypal from "../images/paypal.png";
 import Venmo from "../images/venmo.png";
 
-
-import DP from "../images/dp.png";
-
 const LocalImages = {
   Visa,
   Master,
@@ -104,7 +101,6 @@ const LocalImages = {
   Discover,
   Paypal,
   Venmo,
-  DP,
   BackG,
   Plate,
   Back1,
