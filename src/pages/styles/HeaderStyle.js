@@ -166,7 +166,6 @@ const styles = {
     ".left-editor": {
       width: "55%",
       display: "flex",
-      flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
       flexWrap: "wrap",
@@ -250,7 +249,7 @@ const styles = {
           paddingBottom: "17.375rem",
           backgroundColor: "#FBFBFF",
           borderRadius: "4.36px",
-          border: "1.74px dashed var(--primary)",
+          border: "1.74px dotted var(--primary)",
           boxShadow: "0px 0px 2.8px 0px #CE0F763D",
           flexWrap: "wrap",
           color: "var(--primary)",
@@ -329,14 +328,8 @@ const styles = {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        flexDirection: "column",
-                        border: ".1087rem dashed var(--primary)",
+                        border: ".1087rem solid var(--primary)",
                         flexWrap: "wrap",
-                        
-                        ".MuiTypography-root":{
-                          fontSize:"24px",
-                          paddingTop:"16px",
-                        }
                       },
                     },
                   },
@@ -355,7 +348,7 @@ const styles = {
                           color: "#5B5B5B",
                           fontSize: "1.5rem",
                           lineHeight: "1.7237rem",
-                          fontWeight: "400",
+                          fontWeight: "700",
                         }
                     },
                     ".next": {

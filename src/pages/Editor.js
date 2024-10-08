@@ -17,6 +17,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import '../editor.css'
 import styles from "../pages/styles/HeaderStyle";
 // import styles from "../../pages/styles/HeaderStyle";
 import LocalImages from "../assets/images";

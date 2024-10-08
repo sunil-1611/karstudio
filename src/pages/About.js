@@ -39,7 +39,7 @@ const About = () => {
       {
         breakpoint: 769,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 2,
         },
       },
@@ -151,7 +151,7 @@ const About = () => {
               >
                 No image to upload ? Pick one
               </Typography>
-              <Box sx={{
+              <Box className="upload-image" sx={{
                 display:"flex", alignItems:"center", justifyContent:"center",gap:".4356rem",
                 marginTop:"1.25rem",
                 img:{
@@ -178,7 +178,10 @@ const About = () => {
       <Box className="common-section">
         <Box className="container">
           <Typography className="section-heading" variant="h2">
-            Transform Your <span>Car Listings</span> with{" "}
+            Transform Your 
+            <span>Car Listings</span>
+            <br/> 
+            with{" "} 
             <span>AI-Enhanced Photos!</span>
           </Typography>
           <Box sx={slickStyle.CarListing}>
@@ -212,7 +215,7 @@ const About = () => {
         <Box className="container">
           <Box className="text-center ">
             <Typography className="section-heading" variant="h2">
-              Enhance <span>Your Car</span> Photos with{" "}
+              Enhance <span>Your Car</span> Photos <br/> with{" "}
               <span>AI-Driven KarStudio</span>
             </Typography>
             <Typography className="subPara">
@@ -329,7 +332,7 @@ const About = () => {
         <Box className="container">
           <Box className="text-center">
             <Typography className="section-heading" variant="h2">
-              Elevate Your Photography Skills with <br />
+              Elevate Your Photography<br /> Skills with 
               <span>KarStudio</span>
             </Typography>
             <Typography className="subPara">

@@ -30,6 +30,8 @@ import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "./components/Products/CloudUploadIcon";
 import Slider from "react-slick";
 import PlatePopup from './platePopup'
+import '../editor.css'
+
 import Footer from "../components/Layout/Footer";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",

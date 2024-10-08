@@ -8,7 +8,6 @@ import Editor from './pages/Editor';
 import EditorList from './pages/EditorList';
 import EditorImage from './pages/EditorWithImage'
 import './App.css'
-import Plans from './pages/Plans';
 function App() {
   return (
     <div>
@@ -20,7 +19,6 @@ function App() {
         <Route path="/editor" element={<Editor/>}/>
         <Route path="/editor/list" element={<EditorList/>}/>
         <Route path="/editor-image" element={<EditorImage/>}/>
-        <Route path="/plans" element={<Plans/>}/>
         <Route path="*" element={<Pagenotfound/>}/>
        
       </Routes>

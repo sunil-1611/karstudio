@@ -87,7 +87,6 @@ import Plate from "../images/plate.svg";
 import USER from "../images/icons/user.png";
 import BackG from "../images/backg.svg";
 
-
 import Visa from "../images/visa.png";
 import Master from "../images/master.png";
 import Aex from "../images/aex.png";
@@ -99,6 +98,13 @@ import Venmo from "../images/venmo.png";
 import DP from "../images/dp.png";
 
 const LocalImages = {
+  Visa,
+  Master,
+  Aex,
+  Discover,
+  Paypal,
+  Venmo,
+  DP,
   BackG,
   Plate,
   Back1,
@@ -167,16 +173,7 @@ const LocalImages = {
   IMGG4,
   IMGG5,
   BEFORE,
-  AFTER,
-
-  Visa,
-  Master,
-  Aex,
-  Discover,
-  Paypal,
-  Venmo,
-  DP,
-
+  AFTER
 };
 
 export default LocalImages;
