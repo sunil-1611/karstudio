@@ -6,7 +6,7 @@ const bannerStyle = {
     position: "relative",
     //height:"51.625rem",
     padding:"10.875rem 0 12.5rem 0",
-    backgroundImage: `url(${LocalImages.BANNERIMG})`,
+    // backgroundImage: `url(${LocalImages.BANNERIMG})`,
     backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               backgroundSize:"cover",

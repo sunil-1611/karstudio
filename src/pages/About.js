@@ -7,17 +7,21 @@ import {
   AccordionSummary,
   Box,
   Button,
+  Input,
   TextField,
   Typography,
 } from "@mui/material";
+import TwentyTwenty from "react-twentytwenty";
+
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
-import slickStyle from "./components/SlickSlider/slickstyle";
+import slickStyle from "../components/components/SlickSlider/slickstyle";
 import LocalImages from "../assets/images";
-import ArrowDown from "./components/Products/Arrowdown";
-import UploadFile from "./components/Products/UploadFile";
+import ArrowDown from "../components/components/Products/Arrowdown";
+import UploadFile from "../components/components/Products/UploadFile";
 import { styled } from "@mui/material/styles";
-import {isMobile} from 'react-device-detect';
+import { isMobile } from "react-device-detect";
+import { right } from "@popperjs/core";
 
 const About = () => {
   var settings = {
@@ -50,7 +54,7 @@ const About = () => {
   var settings2 = {
     dots: false,
     arrows: false,
-    autoplay: true,
+    autoplay: false,
     infinite: true,
     autoplaySpeed: 3000,
     slidesToShow: 3,
@@ -68,8 +72,9 @@ const About = () => {
       {
         breakpoint: 769,
         settings: {
+          dots: true,
           slidesToShow: 1,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
         },
       },
     ],
@@ -85,7 +90,36 @@ const About = () => {
     whiteSpace: "nowrap",
     width: 1,
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [sliderPosition, setSliderPosition] = React.useState(50);
+
+  const handleMouseMove = (e) => {
+    const container = e.currentTarget;
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left; // Mouse position relative to the container
+    const width = rect.width;
+    const newPosition = (x / width) * 100; // Convert to percentage
+
+    setSliderPosition(Math.min(Math.max(newPosition, 0), 100)); // Restrict within bounds
+  };
+
+  const carCompare = () => {
+    return (
+      <div className="right comparison-container">
+        <TwentyTwenty
+          left={<img
+            alt=""
+            src={LocalImages.beforeImage}
+          />}
+          right={<img
+            alt="'"
+            src={LocalImages.afterImage}
+          />}
+          slider={<div className="slider-mob">
+          </div>}
+        /></div>
+    )
+  }
   return (
     <Layout>
       {/* Captivate Buyers with Stunning Car Photos! */}
@@ -93,19 +127,19 @@ const About = () => {
       <Box className="common-section" sx={slickStyle.captivate}>
         <Box className="container">
           <Box className="captivateInner">
-            <Box className="left">
-              <Typography className="section-heading" variant="h2">
-              <span>Captivate Buyers with </span>Stunning Car Photos!
+            <Box className="left" style={{ paddingRight: '0' }}>
+              <Typography className="section-heading stunning" variant="h2">
+                <span>Captivate Buyers  </span> with Stunning Car Photos!
               </Typography>
-              <Typography className="para">
+              <Typography className="para capture">
                 Capture the attention of potential buyers with enhanced car
                 photos. Our AI-powered, user-friendly photography studio takes
                 the hassle out of creating professional car listings. Transform
-                Your Car Listings with: AI-Enhanced Photos!
+                Your Car Listings with: <span style={{ color: '#5f0052' }}>AI-Enhanced Photos!</span>
               </Typography>
-              {isMobile && <Box className="right">
-              <img alt="test" src={LocalImages.SLIDEIMG} />
-            </Box>}
+              {isMobile && (
+                carCompare()
+              )}
               <Box className="uploadSection">
                 <Box sx={{ minHeight: "9.8788rem" }}>
                   <Typography
@@ -119,9 +153,9 @@ const About = () => {
                     Give KarStudio a Try
                   </Typography>
                   <Button
-                  onClick={() =>{
-                    navigate('/editor')
-                  }}
+                    // onClick={() => {
+                    //   navigate("/editor");
+                    // }}
                     sx={{
                       marginTop: "4.86rem",
                       backgroundColor: "var(--primary)",
@@ -153,30 +187,62 @@ const About = () => {
                   fontSize: ".98rem",
                   fontWeight: "300",
                   lineHeight: "2.1781rem",
-                  textAlign:"center",
-                  marginTop:"1.5737rem",
+                  textAlign: "center",
+                  marginTop: "1.5737rem",
+                  "@media(max-Width: 640px)": {
+                    position: "relative",
+                    zIndex: "1",
+                  },
                 }}
+                className="noImage"
               >
                 No image to upload ? Pick one
               </Typography>
-              <Box className="upload-image" sx={{
-                display:"flex", alignItems:"center", justifyContent:"center",gap:".4356rem",
-                marginTop:"1.25rem",
-                img:{
-                  width:"100%",
-                  borderRadius:".5444rem",
-                }
-                }}>
-              <img alt="test" src={LocalImages.IMGG1} />
-              <img alt="test" src={LocalImages.IMGG2} />
-              <img alt="test" src={LocalImages.IMGG3} />
-              <img alt="test" src={LocalImages.IMGG4} />
-              <img alt="test" src={LocalImages.IMGG5} />
+              <Box
+                className="upload-image"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: ".4356rem",
+                  marginTop: "1.25rem",
+                  "@media(max-Width: 640px)": {
+                    position: "relative",
+                    zIndex: "1",
+                  },
+                  img: {
+                    width: "100%",
+                    borderRadius: ".5444rem",
+                    border: "2px solid #ECE0EACC",
+                    "&.active": {
+                      borderColor: "var(--primary)",
+                    },
+                  },
+                }}
+              >
+                <img className="active" alt="test" src={LocalImages.IMGG1} />
+                <img alt="test" src={LocalImages.IMGG2} />
+                <img alt="test" src={LocalImages.IMGG3} />
+                <img alt="test" src={LocalImages.IMGG4} />
+                <img alt="test" src={LocalImages.IMGG5} />
               </Box>
             </Box>
-            {!isMobile && <Box className="right">
-              <img alt="test" src={LocalImages.SLIDEIMG} />
-            </Box>}
+            {!isMobile && (
+
+              <div className="right comparison-container">
+                <TwentyTwenty
+                  left={<img
+                    src={LocalImages.beforeImage}
+                    alt=""
+                  />}
+                  right={<img
+                    alt=""
+                    src={LocalImages.afterImage}
+                  />}
+                  slider={<div className="slider">
+                  </div>}
+                /></div>
+            )}
           </Box>
         </Box>
       </Box>
@@ -185,31 +251,65 @@ const About = () => {
       {/* Transform Your Car Listings with AI-Enhanced Photos! */}
       <Box className="common-section">
         <Box className="container">
-          <Typography className="section-heading" variant="h2">
-            Transform Your 
+          <Typography style={{ whiteSpace: 'break-spaces' }} className="section-heading" variant="h2">
+            Transform Your {""}
             <span>Car Listings</span>
-            <br/> 
-            with{" "} 
-            <span>AI-Enhanced Photos!</span>
+            {" "}with <span>AI-Enhanced Photos!</span>
           </Typography>
           <Box sx={slickStyle.CarListing}>
             <Box className="coverCarlisting">
               <Box className="CarListingOption">
-                <Typography className="option">Before</Typography>
-                <Typography className="option">After</Typography>
+                <Typography className="option before">Before</Typography>
+                <Typography className="option before">After</Typography>
               </Box>
               <Slider {...settings}>
                 <div className="carholder">
-                  <img style={{borderRadius: '19px'}}alt="test" src={LocalImages.BEFORE} />
+                  <img
+                    alt="test"
+                    src={LocalImages.BEFORE}
+                  />
                 </div>
                 <div className="carholder">
-                  <img style={{borderRadius: '19px'}} alt="test" src={LocalImages.AFTER} />
+                  <img
+                    alt="test"
+                    src={LocalImages.AFTER}
+                  />
                 </div>
                 <div className="carholder">
-                  <img style={{borderRadius: '19px'}} alt="test" src={LocalImages.BEFORE} />
+                  <img
+                    alt="test"
+                    src={LocalImages.Before1}
+                  />
                 </div>
                 <div className="carholder">
-                  <img style={{borderRadius: '19px'}} alt="test" src={LocalImages.AFTER} />
+                  <img
+                    alt="test"
+                    src={LocalImages.After1}
+                  />
+                </div>
+                <div className="carholder">
+                  <img
+                    alt="test"
+                    src={LocalImages.Before2}
+                  />
+                </div>
+                <div className="carholder">
+                  <img
+                    alt="test"
+                    src={LocalImages.After2}
+                  />
+                </div>
+                <div className="carholder">
+                  <img
+                    alt="test"
+                    src={LocalImages.Before3}
+                  />
+                </div>
+                <div className="carholder">
+                  <img
+                    alt="test"
+                    src={LocalImages.After3}
+                  />
                 </div>
               </Slider>
             </Box>
@@ -219,14 +319,14 @@ const About = () => {
       {/* Transform Your Car Listings with AI-Enhanced Photos! */}
 
       {/* Enhance Your Car Photos with AI-Driven KarStudio */}
-      <Box className="common-section" sx={slickStyle.EnhanceStyle}>
+      <Box className="common-section enhance " style={{ paddingBottom: '0' }} sx={slickStyle.EnhanceStyle}>
         <Box className="container">
-          <Box className="text-center ">
-            <Typography className="section-heading" variant="h2">
-              Enhance <span>Your Car</span> Photos <br/> with{" "}
+          <Box className="text-center space ">
+            <Typography style={{ whiteSpace: 'break-spaces' }} className="section-heading" variant="h2">
+              Enhance <span>Your Car</span> Photos  with{" "}
               <span>AI-Driven KarStudio</span>
             </Typography>
-            <Typography className="subPara">
+            <Typography className="subPara  carStudio">
               Our AI-Driven Car Studio takes professional car photography to the
               next level. Imagine a state-of-the-art facility where you can
               capture stunning, high-qualityimages of vehicles effortlessly.
@@ -271,10 +371,11 @@ const About = () => {
                 <Box className="textDetail">
                   <Box className="innerText">
                     <Typography className="heading">
-                    2. Create Studio-Grade Photos
+                      2. Create Studio-Grade Photos
                     </Typography>
                     <Typography className="desc">
-                    Select from a variety of backgrounds and watch your image transform..
+                      Select from a variety of backgrounds and watch your image
+                      transform..
                     </Typography>
                   </Box>
                 </Box>
@@ -287,10 +388,11 @@ const About = () => {
                 <Box className="textDetail">
                   <Box className="innerText">
                     <Typography className="heading">
-                    3. Download Enhanced Photo
+                      3. Download Enhanced Photo
                     </Typography>
                     <Typography className="desc">
-                    Download your enhanced image and elevate your listing.                    </Typography>
+                      Download your enhanced image and elevate your listing.{" "}
+                    </Typography>
                   </Box>
                 </Box>
               </div>
@@ -301,13 +403,13 @@ const About = () => {
       {/* Enhance Your Car Photos with AI-Driven KarStudio */}
 
       {/* Achieve Optimal Results with Our Step-by-Step Guide */}
-      <Box className="common-section">
+      <Box className="common-section optimal" style={{ paddingTop: '0', marginTop: '80px' }}>
         <Box className="container">
           <Box sx={slickStyle.Guide}>
             <Box className="carHolder">
-              <img alt="test" src={LocalImages.CARNEW} />
+              <img alt="test" src={LocalImages.beforeImage} />
             </Box>
-            <Box className="carText">
+            <Box className="carText reponsive_Achieve" style={{ position: 'absolute', right: '260px' }}>
               <Typography
                 className="section-heading"
                 variant="h2"
@@ -325,7 +427,7 @@ const About = () => {
               <Button
                 sx={{ marginTop: "3rem" }}
                 variant="contained"
-                className="learMore"
+                className="learMore viewGuide1"
               >
                 View Guide
               </Button>
@@ -336,14 +438,15 @@ const About = () => {
       {/* Achieve Optimal Results with Our Step-by-Step Guide */}
 
       {/* Elevate Your Photography Skills with KarStudio */}
-      <Box className="common-section" sx={slickStyle.Photography}>
+      <Box className="common-section" sx={slickStyle.Photography} style={{ marginTop: '0px', backgroundColor: '#fafafa', paddingBottom: '20px' }}>
         <Box className="container">
           <Box className="text-center">
-            <Typography className="section-heading" variant="h2">
-              Elevate Your Photography<br /> Skills with 
-              <span>KarStudio</span>
+            <Typography style={{ whiteSpace: 'break-spaces' }} className="section-heading" variant="h2">
+              Elevate Your Photography
+              Skills with
+              <span> KarStudio</span>
             </Typography>
-            <Typography className="subPara">
+            <Typography className="subPara utilizing">
               Enhance your photography with KarStudio by utilizing original
               images effectively. Start by avoiding strong sunlight and learning
               to harness daylight for stunning results. The best time to shoot
@@ -367,7 +470,7 @@ const About = () => {
                 variant="h3"
                 sx={{ color: "var(--primary)" }}
               >
-                'Photographing from Above'
+                Photographing from Above
               </Typography>
               <Typography className="subtitle">
                 can cause the vehicle to appear unrealistic in the studio.
@@ -433,7 +536,7 @@ const About = () => {
           <Button
             variant="contained"
             sx={{ marginTop: "2.75rem" }}
-            className="learMore"
+            className="learMore viewGuide"
           >
             View Guide
           </Button>
@@ -444,7 +547,7 @@ const About = () => {
       <Box className="common-section" sx={slickStyle.FAQS}>
         <Box className="container">
           <Typography
-            className="section-heading"
+            className="section-heading questions"
             variant="h2"
             sx={{ whiteSpace: "normal" }}
           >
@@ -519,7 +622,7 @@ const About = () => {
         </Box>
       </Box>
 
-      <Box sx={slickStyle.Form}>
+      <Box sx={slickStyle.Form} className='drive'>
         <Box className="container">
           <Box className="formholder">
             <Box className="left">
@@ -527,52 +630,76 @@ const About = () => {
                 className="section-heading"
                 variant="h2"
                 sx={{ whiteSpace: "normal" }}
+                classes='forward'
               >
-                Drive Your Business <br /> Forward with{" "}
+                Drive Your Business  Forward with{" "}
                 <span>
                   AI-Powered
-                  <br /> KarStudio
+                  KarStudio
                 </span>
               </Typography>
               <Typography className="para">
                 Are you ready to revolutionize your dealership inventory with
                 AI-driven technology? Discover how KarStudio can supercharge
-                your business operations. Contact us today to learn more!
+                your business operations.<br /> <span style={{ color: '#5f0052' }}>Contact us today to learn more!</span>
               </Typography>
             </Box>
             <Box className="right">
-              <Box className="item">
-                <TextField
+              {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
+              {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+<TextField id="filled-basic" label="Filled" variant="filled" />
+<TextField id="standard-basic" label="Standard" variant="standard" /> */}
+              {/* <TextField
                   id="outlined-basic"
                   label="Name"
                   variant="outlined"
-                />
+                /> */}
+
+              <Box sx={{ display: "flex", justifyContent: "space-around", columnGap: ".625rem" }}>
+                <Input sx={{ width: "100%" }} placeholder="Name" />
+
+                <Input sx={{ width: "100%" }} placeholder="Email" />
               </Box>
-              <Box className="item">
-                <TextField
+
+              <Input type="number" placeholder="Company Name" />
+
+              <Input
+                type="number"
+
+                placeholder="Phone number" />
+
+              {/* <TextField
                   id="outlined-basic"
                   label="Email"
                   variant="outlined"
-                />
-              </Box>
-              <Box className="item">
-                <TextField
+                /> */}
+              {/* <Box className="item">
+               
+              </Box> */}
+              {/* <TextField
                   id="outlined-basic"
                   label="Company Name"
                   variant="outlined"
-                />
-              </Box>
-              <Box className="item">
-                <TextField
+                /> */}
+              {/* <Box className="item">
+               
+              </Box> */}
+              {/* <TextField
                   id="outlined-basic"
                   label="Phone Number"
                   variant="outlined"
-                />
-              </Box>
-              <Button
-                // sx={{ marginTop: "3rem" }}
+                /> */}
+              {/* <Box className="item">
+              
+              </Box> */}
+              <Button sx={{
+                width: "13.125rem",
+                "@media(max-Width: 640px)": {
+                  margin: "1.625rem auto 0 auto !important",
+                }
+              }}
                 variant="contained"
-                className="learMore"
+                className="learMore submit"
               >
                 Submit
               </Button>

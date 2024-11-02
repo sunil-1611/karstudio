@@ -17,6 +17,8 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../pages/styles/HeaderStyle";
 // import styles from "../../pages/styles/HeaderStyle";
@@ -30,6 +32,7 @@ import PlatePopup from './platePopup'
 import Footer from "../components/Layout/Footer";
 import Header from "../components/Editor/Header";
 import { saveAs } from 'file-saver'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -43,12 +46,27 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
+// S3 client configuration
+const s3Client = new S3Client({
+  endpoint: "https://nyc3.digitaloceanspaces.com",
+region: "us-east-1",
+  credentials: {
+    accessKeyId: "DO00CA7LYRNJTQDRAAZF", // Replace with your actual key
+    secretAccessKey: "nDEkIAWT/ofQgfZa9VSY5dAAlza4+N3NsZkUtRtiTFU", // Ensure this is set in your environment
+  },
+});
+
 const Editor = () => {
   const location = useLocation()
+  const [loading, setLoading] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
   const [isImageUpload, setIsImageUpload]  = useState(false)
+  const [bannerIndex, setBannerIndex]  = useState(0)
+  const [selectedBanner, setSelectedBanner]  = useState('https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner1.jpg')
+  const [activeIndex, setActiveIndex]  = useState(0)
   const [uploadedImages, setUploadedImages] = useState([]); // State to hold multiple image URLs
   const [selectedImage, setSelectedImage] = useState(null); // State to hold multiple image URLs
-  const [finalImage, setFinalImage] = useState(null); // State to hold multiple image URLs
+  const [finalImage, setFinalImage] = useState([]); // State to hold multiple image URLs
   const [editorList, setEditorList] = useState([]);
   const [hideAddImage, setHideAddImage] = useState(false);
 const [openPlate, setOpenPlate] = useState(false)
@@ -89,6 +107,7 @@ const [openPlate, setOpenPlate] = useState(false)
 
 
   const handleFetchBackgroundImages = () => {
+    setLoading(true)
     const myHeaders = new Headers();
 myHeaders.append("apiKey", "CgbmPwqMQNUZzeHAJYAreHKtT");
 myHeaders.append("Cookie", "JSESSIONID=MGUyYWMwZDMtZGEzOS00M2IxLTkwYWEtMzJmY2ViMmQ3YTg2");
@@ -113,14 +132,18 @@ fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
     let imageUrlObj = null;
 if(location?.state?.index === 0 || location?.state?.index){
    imageUrlObj = result?.content[location?.state?.index]?.carStudio?.afterStudioImages[0].afterStudioImageUrl
-   setFinalImage(imageUrlObj)
-   setUploadedImages([imageUrlObj])
-   setIsImageUpload(true)
+  setIsImageUpload(true)
    setIsAddImage(true)
    setHideAddImage(true)
-   setFinalImage(imageUrlObj)
+   setFinalImage([imageUrlObj])
+   setUploadedImages([imageUrlObj])
+   setLoading(false)
+   setIsSaved(true)
+
 
 }
+setLoading(false)
+
   })
   .catch((error) => console.error(error));
   }
@@ -128,67 +151,103 @@ if(location?.state?.index === 0 || location?.state?.index){
   console.log('***djsjdjsd', editorList)
    
   useEffect(() => {
-    handleFetchBackgroundImages()
+    if(location?.state?.index){
+      handleFetchBackgroundImages()
+
+    }
   }, [location?.state?.index])
 
   // UI for the component
 
-  const handleUploadImageApi = () => {
-    // const myHeaders = new Headers();
-    // myHeaders.append("apiKey", "CgbmPwqMQNUZzeHAJYAreHKtT");
-    // myHeaders.append("Cookie", "JSESSIONID=MTJkMmViNTItMzdhZi00NDhjLWE4ZTctZTkyZTk4Nzg1ZjMx");
-    
-    // const formdata = new FormData();
-    // formdata.append("images[0].fileUrl", "https://img.freepik.com/free-psd/realistic-car-illustration_23-2151227613.jpg");
-    // formdata.append("images[0].position", "FRONT");
-    // formdata.append("plateImageUrl", "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/saved332093bce91ba24bda424dc75d8ad4e73b2f1b4aad37d027f7dbfcc0553a2c81f03fbbe9-41f4-4ec7-8137-3bbadfe43aa1.png");
-    
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: formdata,
-    //   redirect: "follow"
-    // };
-    const result = {
-      "success": true,
-      "code": "0004",
-      "time": "2024-10-08T11:26:24.028+00:00",
-      "return": {
-          "orderId": "ba8a912e819c406bbc3d1b2e5e66d562",
-          "carStudioId": "7063da7e-1302-4077-9e97-4fd91c17e70d",
-          "afterStudioImages": [
-              {
-                  "imageUrl": "https://carstudio.s3.eu-west-1.amazonaws.com/carstudio/saved752cdbdab8aa1f6addc17e55d31a4fdd6bec829edf64655b84c9d4c230e7969af8dcf271-5eec-46a0-9989-7d540ae622b9.png",
-                  "position": "FRONT"
-              }
-          ]
-      }
-  }
-if(result?.return?.afterStudioImages && result?.return?.afterStudioImages.length  > 0){
-  setFinalImage(result?.return?.afterStudioImages[0]?.imageUrl)
-  setIsAddImage(true)
-
-}
-    
-    // fetch("https://tokyo.carstudio.ai/webEditor/uploadImagesWithUrlV2", requestOptions)
-    //   .then((response) => response.text())
-    //   .then((result) => setTotalCredits(result?.return?.afterStudioImages))
-    //   .catch((error) => console.error(error));
-  }
-
-  const handleImageUpload = (event) => {
-    
+  const uploadImageToS3 = async (file) => {
+    const params = {
+      Bucket: "assets.karstudio", // Your bucket name
+      Key: `static/${file.name}`, // File name, customize path if needed
+      Body: file,
+      ACL: "public-read", // Makes the file publicly accessible
+    };
+  
+    try {
+      await s3Client.send(new PutObjectCommand(params));
+      const uploadedUrl = `https://nyc3.digitaloceanspaces.com/assets.karstudio/static/${file.name}`;
+      return uploadedUrl; // Return the URL after upload
+    } catch (err) {
+      console.error("Error uploading file to S3", err);
+      return null;
+    }
+  };
+  
+  // Handle image upload and store S3 URLs
+  const handleImageUpload = async (event) => {
+    setLoading(true)
     const files = Array.from(event.target.files); // Convert FileList to array
     if (files.length > 0) {
       setIsImageUpload(true);
-      const imageUrls = files.map((file) => URL.createObjectURL(file)); // Create URLs for all uploaded files
-      if(uploadedImages.length === 0){
-        setSelectedImage(imageUrls)
-      }
-      setUploadedImages((prevImages) => [...prevImages, ...imageUrls]); // Append the new images to the existing state
+  
+      // Map over files and upload them to S3
+      const uploadPromises = files.map(file => uploadImageToS3(file));
+  
+      // Wait for all uploads to complete
+      const uploadedUrls = await Promise.all(uploadPromises);
+  
+      // Filter out any failed uploads (null values)
+      const successfulUploads = uploadedUrls.filter(url => url !== null);
+  
+      // Store the URLs in the state
+      setUploadedImages(prevImages => [...prevImages, ...successfulUploads]);
+      setLoading(false)
+
     }
   };
 
+  console.log('***asdasd', uploadedImages)
+
+  
+
+  const handleUploadImageApi = (imagesArr) => {
+    setLoading(true)
+
+    const myHeaders = new Headers();
+    myHeaders.append("apiKey", "CgbmPwqMQNUZzeHAJYAreHKtT");
+    myHeaders.append("Cookie", "JSESSIONID=MTJkMmViNTItMzdhZi00NDhjLWE4ZTctZTkyZTk4Nzg1ZjMx");
+  
+    const formdata = new FormData();
+  
+    // Dynamically append each image from the array
+    imagesArr.forEach((imageUrl, index) => {
+      formdata.append(`images[${index}].fileUrl`, imageUrl);
+      // You can set different positions based on your needs
+      formdata.append(`images[${index}].position`, "FRONT");
+    });
+  
+    // Append other necessary fields
+    formdata.append("plateImageUrl", selectedBanner);
+  
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow"
+    };
+  
+    fetch("https://tokyo.carstudio.ai/webEditor/uploadImagesWithUrlV2", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log('***sdsds', result?.return?.afterStudioImages)
+        if (result?.return?.afterStudioImages && result?.return?.afterStudioImages.length > 0) {
+          const arr = result?.return?.afterStudioImages.map((item) => {
+            return item.imageUrl
+          })
+          
+          setFinalImage(arr);
+          setIsAddImage(true);
+          setLoading(false)
+
+        }
+      })
+      .catch((error) => setLoading(false));
+  };
+  
 
  
 // Function to remove an image based on its index
@@ -206,20 +265,41 @@ const getCurrentDate = () => {
   
   return `${day}.${month}.${year}`;
 };
+console.log('***kaskds', finalImage)
 
-const downloadImage = (imageUrl, imageName) => {
-  
+const downloadImage = (url, filename) => {
   const link = document.createElement('a');
-  link.href = imageUrl;
-  link.download = imageName;  // Name the file for download
-  document.body.appendChild(link);  // Append the link to the DOM
-  link.click();  // Simulate a click event on the link
-  document.body.removeChild(link);  // Remove the link after download
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+// Function to download all images from the array
+const downloadAllImages = (imagesArr) => {
+  imagesArr.forEach((imageUrl, index) => {
+    const filename = `Karstudio_${index + 1}.jpg`;  // Naming the images dynamically
+    downloadImage(imageUrl, filename);
+  });
 };
 
 
-console.log('***dsfsdfds23', hideAddImage)
+console.log('***dsfsdfds23', activeIndex)
+useEffect(() => {
+  if (loading || openPlate) {
+    // Disable scroll
+    document.body.style.overflow = 'hidden';
+  } else {
+    // Re-enable scroll
+    document.body.style.overflow = 'auto';
+  }
 
+  // Cleanup: Re-enable scrolling when the component unmounts or loading stops
+  return () => {
+    document.body.style.overflow = 'auto';
+  };
+}, [loading, openPlate]);
  
   return (
     <>
@@ -244,7 +324,7 @@ console.log('***dsfsdfds23', hideAddImage)
                     color: "rgba(0, 0, 0, 0.5)",
                   }}
                 >
-                  {getCurrentDate()} - {uploadedImages?.length} Upload
+                  {getCurrentDate()} - {uploadedImages?.length}Upload
                 </Typography> : <Typography
                   sx={{
                     fontSize: "1.25rem",
@@ -264,15 +344,15 @@ console.log('***dsfsdfds23', hideAddImage)
               </Button> : <Typography sx={{ marginLeft: '85px', padding: "1rem 12.50rem" }}></Typography>}
             </Box>
 
-            <Box className="file-upload">
+            <Box className="file-upload" >
             {/* <img
             src={LocalImages.BackG}
             alt="Background Image"
           /> */}
-            {(isAddImage && uploadedImages) ? 
+            {(isAddImage && finalImage.length > 0) ? 
            
                 <img
-              src={finalImage}
+              src={finalImage[activeIndex]}
                alt="Uploaded Preview"
                     style={{
                         width: '824px',
@@ -281,16 +361,17 @@ console.log('***dsfsdfds23', hideAddImage)
                     }}
             />
                 :     
-               <Button
+               !loading && <Button
+               
                 component="label"
                 role={undefined}
                 variant="contained"
                 tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
+                startIcon={<CloudUploadIcon style={{marginTop: '80px'}}/>}
               >
                 Drag and drop images here
                 <span>New</span>
-                <span className="browse">BROWSE FILES</span>
+                <span className="browse" style={{marginBottom: "112px"}}>BROWSE FILES</span>
                 <VisuallyHiddenInput
                   type="file"
                   onChange={handleImageUpload} // Attach the upload handler here
@@ -302,12 +383,21 @@ console.log('***dsfsdfds23', hideAddImage)
             
 
             {uploadedImages &&uploadedImages.length > 0 &&  <div className="pic-slider">
-              <Slider  {...settings}>
+              <Slider  
+              {...{
+                ...settings, // Base settings
+                slidesToScroll: uploadedImages.length > 1 ? 1 : 0, // Disable infinite scrolling if only one image
+              }}>
                 {uploadedImages && uploadedImages.map((image, index) => {
                   return(
-                    <div className="pic-img" >
+                    <div className="pic-img" onClick={(e) => {
+                      debugger
+                      e.preventDefault();
+                      setActiveIndex(index)
+                    }
+                    }>
                     <img alt="test" src={image} />
-                    <button onClick={() => removeImage(index)}><i className="cross-icon"></i></button>
+                    {!isSaved && <button onClick={() => removeImage(index)}><i className="cross-icon"></i></button>}
                   </div>
                   )
                 })}
@@ -348,25 +438,40 @@ console.log('***dsfsdfds23', hideAddImage)
                      <Typography>Add New</Typography>
                   </Box>
                   <Box className="iteam">
-                    <img alt="test" src={LocalImages.IMAGE} />
+                    <img onClick={() => {
+                      setSelectedBanner('https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner1.jpg')
+                      setBannerIndex(0)
+                    }} className={bannerIndex === 0 ?"active" : ""} alt="test" src="https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner1.jpg" />
                   </Box>
-                  <Box className="iteam">
-                    <img alt="test" src={LocalImages.Back1} />
+                  <Box onClick={() => {
+                      setSelectedBanner('https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner2.jpg')
+                      setBannerIndex(1)
+                   }} className="iteam">
+                    <img className={bannerIndex === 1 ?"active" : ""} alt="test" src="https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner2.jpg" />
                   </Box>
-                  <Box className="iteam">
-                    <img alt="test" src={LocalImages.Back2} />
+                  <Box onClick={() => {
+                      setSelectedBanner('https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner3.jpg')
+                      setBannerIndex(2)
+                    }} className="iteam">
+                    <img className={bannerIndex === 2 ?"active" : ""} alt="test" src="https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner3.jpg" />
                   </Box>
-                  <Box className="iteam">
-                    <img alt="test" src={LocalImages.Back3} />
+                  <Box onClick={() => {
+                      setSelectedBanner('https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner4.jpg')
+                      setBannerIndex(3)
+                   }} className="iteam">
+                    <img className={bannerIndex === 3 ?"active" : ""} alt="test" src="https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner4.jpg" />
                   </Box>
-                  <Box className="iteam">
-                    <img alt="test" src={LocalImages.Back4} />
+                  <Box onClick={() => {
+                      setSelectedBanner('https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner5.jpg')
+                      setBannerIndex(4)
+                   }} className="iteam">
+                    <img className={bannerIndex === 4 ?"active" : ""} alt="test" src="https://nyc3.digitaloceanspaces.com/assets.karstudio/static/banner5.jpg" />
                   </Box>
                 </Box>
                 <Box className="option">
                   <FormControlLabel
                     required
-                    control={<Checkbox />}
+                    control={<Checkbox  checked={true}/>}
                     label="Apply to all"
                   />
                   <Button className="next">NEXT: STUDIO SETTINGS</Button>
@@ -406,13 +511,13 @@ console.log('***dsfsdfds23', hideAddImage)
             <div style={{ display: "flex", alignItems: "center" }}>
   
                 <Box className="" sx={{ width: '50%', paddingRight:"15px"}}>
-                  <button onClick={() => downloadImage(finalImage, 'Karstudio.jpg')}className="btn-line" style={{ width: '100% ', cursor: 'pointer'}}>
+                  <button onClick={() => downloadImage(finalImage[activeIndex],'Karstudio.jpg')}className="btn-line" style={{ width: '100% ', cursor: 'pointer'}}>
                   DOWNLOAD SELECTED
                   </button>
                 </Box>
 
                 <Box className="" sx={{ width: '50%', paddingLeft:"15px"}}>
-                  <button onClick={() => downloadImage(finalImage, 'Karstudio.jpg')}className="btn" style={{ width: '100% ',cursor: 'pointer'}}>
+                  <button onClick={() => downloadAllImages(finalImage)} className="btn" style={{ width: '100% ',cursor: 'pointer'}}>
                     Download All Images
                   </button>
                 </Box>
@@ -425,10 +530,23 @@ console.log('***dsfsdfds23', hideAddImage)
       </Box>
     
 
-     {openPlate && <PlatePopup setOpenPlate={setOpenPlate} onConfirm={() =>  handleUploadImageApi()} />}
+     {openPlate && <PlatePopup setOpenPlate={setOpenPlate} onConfirm={() =>  handleUploadImageApi(uploadedImages)} />}
 
       <Box sx={{ marginTop: 10}}><Footer /></Box>
-      
+      {loading && <Box sx={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Back shadow
+        zIndex: 9999, // Ensure it's on top of other elements
+      }}>
+      <CircularProgress size={100} thickness={3}/>
+    </Box>}
     </>
   );
 };

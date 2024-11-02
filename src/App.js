@@ -9,12 +9,13 @@ import EditorList from './pages/EditorList';
 import EditorImage from './pages/EditorWithImage'
 import './App.css'
 import Plans from './pages/Plans';
+import Login from './pages/login';
 function App() {
   return (
     <div>
       <BrowserRouter>
       <Routes>
-        <Route path="/karkiosk" element={<Home/>}/>
+        <Route path="/login" element={<Login/>}/>
         <Route path="/" element={<About/>}/>
         <Route path="/guide" element={<Contact/>}/>
         <Route path="/editor/new" element={<Editor/>}/>

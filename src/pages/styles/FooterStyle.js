@@ -115,6 +115,10 @@ const stylesfooter = {
             fontWeight: "700",
             color: "var(--white)",
             whiteSpace: "pre",
+            "@media(max-Width: 640px)": {
+              fontSize: "1.125rem",
+              lineHeight: "1.0219rem",
+            }
           },
 
           ".menuFooter": {

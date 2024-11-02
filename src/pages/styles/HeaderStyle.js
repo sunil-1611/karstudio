@@ -248,9 +248,10 @@ const styles = {
         marginTop: "1.875rem",
         ".MuiButtonBase-root": {
           width: "100%",
+          aspectRatio: 20/12,
           //height: "50.5rem",
-          paddingTop: "17.375rem",
-          paddingBottom: "17.375rem",
+          // paddingTop: "17.375rem",
+          // paddingBottom: "17.375rem",
           backgroundColor: "#FBFBFF",
           borderRadius: "4.36px",
           border: "1.74px dashed var(--primary)",
@@ -325,6 +326,11 @@ const styles = {
                     ".iteam": {
                       borderRadius: ".2725rem",
                       img: {
+                        "&.active": {
+                          border: "1px solid #5f0052",
+                          borderRadius: "10px",
+                        },
+                       
                         width: "100%",
                         height: "100%",
                       },

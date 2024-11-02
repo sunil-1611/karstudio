@@ -159,7 +159,7 @@ h6,
   background-color: #ECE0EA !important;
 }
 .slick-dots {
-  bottom: -50px;
+  bottom: -50px !important;
 }
 .slick-dots li button:before{
   font-size: 1.125rem;
@@ -330,6 +330,12 @@ h6,
   font-size: 26px !important;
   line-height: 32px !important;
 }
+.css-1kqfpig .coverCarlisting .slick-slider .slick-list .slick-track .slick-slide >div .carholder img {
+   object-fit: contain !important;
+ }
+ .css-1kqfpig .coverCarlisting .slick-slider{
+  overflow: hidden !important;
+ }
 .css-mgl938 .coverCarlisting .slick-slider .slick-list .slick-track .slick-slide >div .carholder img{
   object-fit: contain !important;
   height: 100px !important;
@@ -338,7 +344,7 @@ h6,
   height: 200px !important;
 } */
 .coverCarlisting .slick-slider .slick-list{
-  height: 100px !important;
+  height: 116px !important;
 }
 .faqs .MuiAccordion-root .MuiAccordion-heading .MuiButtonBase-root {
   padding: 0 10px !important;
@@ -439,3 +445,317 @@ h6,
   padding-left: var(--paddingLeft15);
   padding-right: var(--paddingRight15);
 }
+
+
+.right-product-sidebar{width:100%}
+.inner-right-product h1{font-size:16px;line-height:19px;padding-bottom:0px}
+.upload-tittle p {padding: 0px 0 0;font-size: 12px;}
+.inputbox{width:100%;padding-bottom:20px}
+.form-button{position:relative;display:flex}
+.form-box.second-box .inputbox{width:48%}
+.form-box.second-box .inputbox:last-child{width:100%}
+.form-button a:last-child{margin-bottom:16px}
+.form-button a{width:100%}
+.form-button a:first-child{order:1}
+.inner-right-product {padding-bottom: 0px;}
+.inner-photos h1 {font-size: 14px;}
+.inner-photos p {font-size: 12px;text-align: center;}
+
+.check-box p {font-size: 14px;}
+.check-box.active {border-color: #3c013a;}
+.check-box {width: 100% !important;margin-bottom: 15px;}
+
+.forward{
+  width: 100%;
+  max-width: 420px;
+}
+.comparison-container img{
+  height: 650px !important;
+}
+.login, .register{
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  height: 42px !important;
+}
+.login{
+  background: transparent !important;
+  color: #5f0052 !important;
+  width: 92px !important;
+}
+.register{
+  width: 123px !important;
+}
+/* Container for the account section */
+.account-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Profile picture styling */
+.profile-pic {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Greeting text styling */
+.greeting {
+  font-size: 18px;
+  color: #7c7c7c;
+  margin: 0;
+}
+.Enhanceholder .slick-slider .slick-list .slick-track .slick-slide {
+  box-shadow: 0px 0px 5px 1px #5f005266;
+}
+/* Account text styling */
+.account {
+  font-size: 16px;
+  color: #62005b;
+  font-weight: 400;
+  margin: 0;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Dropdown arrow styling */
+.dropdown-arrow {
+  font-size: 14px;
+}
+.examples{
+  font-size: 24px;
+  text-align: center;
+}
+button.slick-arrow.slick-prev.slick-disabled {
+  background-color: #5f005283 !important;
+}
+button.slick-arrow.slick-next.slick-disabled {
+  background-color: #5f005283 !important;
+}
+button.slick-arrow.slick-next,  button.slick-arrow.slick-prev{
+  margin-top: 60px !important;
+}
+.photoBox.use-slider {
+  display: flex !important;
+  justify-content: center;
+  gap: 60px;
+  padding-top: 42px;
+}
+.setImage {
+  position: absolute;
+  bottom: 0px;
+  margin-left: -18px;
+}
+.submit{
+  margin-top: 15px !important;
+}
+.drive{
+  padding: 5.5rem 0 !important;
+}
+.captivateInner .left .uploadSection {
+  border: 1px dashed #5f0052 !important;
+}
+.item.cross {
+  position: relative;
+}
+.item.wright {
+  position: relative;
+}
+@media (max-width: 768px) {
+  .common-section.results {
+    margin-top: 0;
+    padding-top: 0;
+}
+.viewGuide1{
+  margin-top: 15px !important;
+}
+.photoRes {
+   width: 100%;
+}
+.rightResponsive{
+  width: 30px !important;
+  left: -10px !important;
+  bottom: -8px !important;
+}
+.pinkbg, .keyTips h3{
+  font-size: 18px !important;
+}
+.recommended{
+  font-size: 18px !important;
+}
+.paddingBottom34.pinkbg h3{
+  font-size: 18px !important;
+
+}
+.good{
+  font-size: 30px !important;
+  line-height: 34px !important;
+}
+.examples{
+  font-size: 16px;
+}
+.common-section.results .carholder .title {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+  .carText.reponsive_Achieve {
+    right: 0 !important;
+}
+.upload-image{
+  justify-content: space-around !important;
+  overflow: scroll;
+}
+.noImage{
+  margin-top: 5px !important;
+}
+.upload-image{
+  margin-top: 5px !important;
+}
+.topfooter .innerfooter .footeritem:first-child{
+  min-width: 100% !important;
+}
+.forward{
+  max-width: 100%;
+  font-size: 26px !important;
+  line-height: 28px !important;
+}
+.optimal{
+  padding: 0 !important;
+}
+.capture{
+  font-size: 20px !important;
+  font-weight: 300 !important;
+  max-width: 352px;
+}
+.before{
+  font-size: 14px !important;
+}
+.coverCarlisting .CarListingOption{
+  margin-bottom: 2px !important;
+  margin-top: 8px !important;
+}
+.carStudio, .carholder .textDetail .innerText .desc, .carText .section-para, .utilizing, .formholder .left .para{
+  font-size: 16px !important;
+  font-weight: 300 !important;
+}
+.carholder .textDetail .innerText .desc{
+  line-height: 22px !important;
+  text-align: center !important;
+}
+.slick-track .slick-slide .carholder .textDetail .innerText .heading{
+  font-size: 19px !important;
+  text-align: center !important;
+}
+ .carText .section-heading{
+  text-align: center !important;
+}
+  .stunning span{
+    display: block;
+  }
+  .upload-image img {
+    width: 69px !important;
+}
+.learMore{
+  height: 41px;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
+.optimal{
+  height: 800px !important;
+}
+.drive .formholder .left .section-heading{
+  font-size: 26px !important;
+  line-height: 35px !important;
+}
+.drive .formholder .left .para{
+  margin-top: 8px;
+}
+.faqs .MuiAccordion-root .MuiAccordion-heading .MuiButtonBase-root .MuiAccordionSummary-content{
+  font-weight: 400 !important;
+}
+.questions{
+  font-size: 18px !important;
+}
+.faqs{
+  margin-top: 20px !important;
+}
+.photographyCove .photography .title{
+  font-size: 14px !important;
+}
+.optimal .css-1nagg0h{
+  padding: 0 !important;
+}
+.comparison-container img{
+  height: 292px !important;
+}
+.photoBox{
+  gap: 20px !important;
+}
+.photographyCove .photography.photographyLeft .photoBox .item .crossIcon {
+  bottom: -3px !important;
+}
+.photographyCove .photography.photographyLeft .photoBox .item .wrigthIcon {
+  bottom: -3px !important;
+}
+.viewGuide{
+  margin-top: 15px !important;
+}
+.enhance .container{
+  padding: 0 !important;
+}
+.space{
+  padding: 20px !important;
+  background: #f5f4ff !important;
+}
+.Enhanceholder .slick-slider .slick-list .slick-track .slick-slide .carholder .textDetail {
+  margin-top: 0 !important;
+  padding-top: 0;
+}
+.common-section.enhance{
+  background: transparent !important;
+}
+
+}
+
+@media (max-width: 440px) {
+.optimal{
+  height: 750px !important;
+}
+.upload-image img {
+  width: 78px !important;
+}
+.setImage {
+  width: 25px !important;
+  left: 18px;
+  bottom: -8px;
+}
+img.photoRes {
+  width: 100%;
+}
+button.slick-arrow.slick-next,  button.slick-arrow.slick-prev{
+  margin-top: 20px !important;
+  width: 18px !important;
+        height: 18px !important;
+}
+.slick-arrow.slick-next {
+  background-image: url('./assets/images/arrowleft.png') !important;
+}
+.slick-arrow.slick-prev {
+  background-image: url('./assets/images/arrowRight1.png') !important;
+}
+
+.common-section.paddingTop24.paddingBottom34.pinkbg {
+  margin: 0 !important;
+}
+}
+
+@media (max-width: 400px) {
+  .optimal{
+    height: 800px !important;
+  }
+  
+  }

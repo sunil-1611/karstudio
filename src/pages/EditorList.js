@@ -175,10 +175,10 @@ const requestOptions = {
   redirect: "follow"
 };
 
-// fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
-//   .then((response) => response.json())
-//   .then((result) => setEditorList(result?.content))
-//   .catch((error) => console.error(error));
+fetch("https://tokyo.carstudio.ai/webEditor/list", requestOptions)
+  .then((response) => response.json())
+  .then((result) => setEditorList(result?.content))
+  .catch((error) => console.error(error));
   }
   //handle menu click
 

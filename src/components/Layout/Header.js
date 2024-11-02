@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -13,10 +14,10 @@ import {
 } from "@mui/material";
 import styles from "../../pages/styles/HeaderStyle";
 import LocalImages from "../../assets/images";
-import MenuIcon from "../../pages/components/Products/Menu";
+import MenuIcon from "../components/Products/Menu";
 
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   //handle menu click
 
@@ -34,8 +35,8 @@ const Header = () => {
           justifyContent: "space-between",
           gap: "1rem",
           boxShadow: "0px 4px 4px 0px #00000040",
-          padding:"1rem",
-          marginBottom:"1rem",
+          padding: "1rem",
+          marginBottom: "1rem",
           //minHeight:"5rem",
         }}
       >
@@ -59,8 +60,8 @@ const Header = () => {
               border: "2px solid var(--primary)",
               textTransform: "capitalize",
               whiteSpace: "pre",
-              width:"100%",
-              textAlign:"center",
+              width: "100%",
+              textAlign: "center",
             },
           }}
           className="backtoBtn"
@@ -78,7 +79,6 @@ const Header = () => {
           <MenuItem>
             <Link to={"/package"}>Try KarStudio</Link>
           </MenuItem>
-         
         </MenuList>
       </Paper>
     </Box>
@@ -108,9 +108,14 @@ const Header = () => {
                 >
                   <MenuIcon />
                 </Button>
-                <Link sx={{ cursor: "pointer"}} onClick={() =>{
-                          navigate('/')
-                        }} to="/"className="logo">
+                <Link
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  to="/"
+                  className="logo"
+                >
                   {" "}
                   <img alt="test" src={LocalImages.LOGO} />
                 </Link>
@@ -128,27 +133,87 @@ const Header = () => {
                   <Paper>
                     <MenuList sx={{ display: "flex" }}>
                       <MenuItem>
-                        <Link onClick={() =>{
-                          navigate('/guide')
-                        }} to={"/guide"}>KarStudio Guide</Link>
+                        <Link
+                          onClick={() => {
+                            navigate("/guide");
+                          }}
+                          to={"/guide"}
+                        >
+                          KarStudio Guide
+                        </Link>
                       </MenuItem>
                       <MenuItem>
-                        <Link onClick={() =>{
-                          navigate('/editor')
-                        }}to={"/editor"}>Editor</Link>
+                        <Link
+                          onClick={() => {
+                            navigate("/editor");
+                          }}
+                          to={"/editor"}
+                        >
+                          Editor
+                        </Link>
                       </MenuItem>
                       <MenuItem>
-                        <Link onClick={() =>{
-                          navigate('/package')
-                        }} to={"/package"}>Try KarStudio</Link>
+                        <Link
+                          onClick={() => {
+                            navigate("/package");
+                          }}
+                          to={"/package"}
+                        >
+                          Try KarStudio
+                        </Link>
                       </MenuItem>
                     </MenuList>
                   </Paper>
-                  <Button onClick={() =>{
-                          navigate('/')
-                        }} className="backtoBtn" variant="contained" to={"/"}>
+                  <Button
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                    className="backtoBtn"
+                    variant="contained"
+                    to={"/"}
+                  >
                     Back to KarKiosk
                   </Button>
+                  <Button
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                    className="backtoBtn login"
+                    variant="contained"
+                    to={"/"}
+                  >
+                    LOGIN
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                    className="backtoBtn register"
+                    variant="contained"
+                    to={"/"}
+                  >
+                    REGISTER
+                  </Button>
+                  <div className="account-section">
+                    <img
+                      src={LocalImages.USER}
+                      alt="Profile Picture"
+                      className="profile-pic"
+                    />
+                    <div className="account-text">
+                      <p className="greeting">Hello, Neesh</p>
+                      <p className="account">
+                        Account{" "}
+                        <span className="dropdown-arrow">
+                          {" "}
+                          <img
+                            src={LocalImages.ArrowProfile}
+                            alt="Profile Picture"
+                          />
+                        </span>
+                      </p>
+                    </div>
+                  </div>
                 </Box>
               </Box>
             </Toolbar>
@@ -175,7 +240,7 @@ const Header = () => {
                       borderRadius: "0",
                       height: "calc(100vh - 5.3rem)",
                       overflow: "auto",
-                      padding:'0 1rem 1rem 1rem',
+                      padding: "0 1rem 1rem 1rem",
                       "&::-webkit-scrollbar": {
                         width: ".25rem",
                         height: ".25rem",
@@ -183,34 +248,34 @@ const Header = () => {
                       "&::-webkit-scrollbar-track": {
                         background: "var(--maroon521A)",
                       },
-    
+
                       "&::-webkit-scrollbar-thumb": {
                         width: ".25rem",
                         height: ".25rem",
                         background: "var(--primary)",
                         borderRadius: "0",
                       },
-                      ".MuiList-root":{
-                        padding:"0",
-                        margin:"0",
+                      ".MuiList-root": {
+                        padding: "0",
+                        margin: "0",
                         // display:"inline-flex",
                         // columnGap:"1rem",
                         // flexWrap:"wrap",
-                        ".MuiMenuItem-gutters":{
-                          padding:"0",
-                          marginBottom:"1rem",
-                          minHeight:"inherit",
-                          "&:hover":{
-                            backgroundColor:"transparent"
+                        ".MuiMenuItem-gutters": {
+                          padding: "0",
+                          marginBottom: "1rem",
+                          minHeight: "inherit",
+                          "&:hover": {
+                            backgroundColor: "transparent",
                           },
-                          "&:last-child":{
-                            marginBottom:"0",
+                          "&:last-child": {
+                            marginBottom: "0",
                           },
-                          ".MuiTypography-inherit":{
-                            textDecoration:"none",
-                            color:"var(--black)",
-                            "&:hover":{
-                              color:"var(--primary)",
+                          ".MuiTypography-inherit": {
+                            textDecoration: "none",
+                            color: "var(--black)",
+                            "&:hover": {
+                              color: "var(--primary)",
                             },
                           },
                         },

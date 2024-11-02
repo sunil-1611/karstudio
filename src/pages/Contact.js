@@ -9,6 +9,7 @@ const Contact = () => {
   var settings = {
     dots: false,
     arrows: true,
+    infinite: false,
     autoplay: true,
     autoplaySpeed: 3000,
     slidesToShow: 1,
@@ -17,7 +18,7 @@ const Contact = () => {
   var settings2 = {
     dots: true,
     arrows: false,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -25,7 +26,7 @@ const Contact = () => {
   var settings3 = {
     dots: true,
     arrows: false,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -83,7 +84,7 @@ const Contact = () => {
         </Box>
       </Box>
 
-      <Box className="common-section" sx={slickStyle.tipTop}>
+      <Box className="common-section results" sx={slickStyle.tipTop}>
         <Box className="container">
           <Slider {...settings}>
             <div className="carholder">
@@ -106,11 +107,63 @@ const Contact = () => {
               >
                 Kar Studio
               </Button>
+              <Box className="photoBox use-slider">
+                <Box className="item cross">
+                  <img className=" photoRes"  alt="test" src={LocalImages.Photo1} />
+                  <img
+                    alt="test"
+                    className="crossIcon setImage"
+                    src={LocalImages.CROSSICON}
+                  />
+                </Box>
+                <Box className="item wright ">
+                  <img alt="test" className="photoRes"  src={LocalImages.Photo2} />
+                  <img
+                    alt="test"
+                    className="wrigthIcon setImage"
+                    src={LocalImages.WRIGHTICON}
+                  />
+                </Box>
+              </Box>
+            </div>
+            <div className="carholder photography photographyLeft">
+             
+
+               <Typography
+                className="title"
+                variant="h3"
+                sx={{ color: "var(--primary)" }}
+              >
+              Photos taken during hours of strong sunlight
+              </Typography>
+              <Typography className="subtitle">
+              can cause excessive glare on the vehicle's surface orincrease reflections.
+                            </Typography>
+              <Box className="photoBox use-slider">
+                <Box className="item cross">
+                  <img className=" photoRes"  alt="test" src={LocalImages.Photo1} />
+                  <img
+                    alt="test"
+                    className="crossIcon setImage"
+                    src={LocalImages.CROSSICON}
+                  />
+                </Box>
+                <Box className="item wright ">
+                  <img alt="test" className="photoRes"  src={LocalImages.Photo2} />
+                  <img
+                    alt="test"
+                    className="wrigthIcon setImage"
+                    src={LocalImages.WRIGHTICON}
+                  />
+                </Box>
+              </Box>
+              
+              
             </div>
             <div className="carholder">
-              <Typography className="title" variant="h3">
+              <h3 className="title" variant="h3">
                 Top Tip for Best Results with KarStudio
-              </Typography>
+              </h3>
               <Typography className="para" sx={{ marginBottom: "1.25rem" }}>
                 Did you know that vehicles photographed using KarStudio can
                 boost interaction rates by up to 52%? Proper photography ensures
@@ -127,27 +180,24 @@ const Contact = () => {
               >
                 Kar Studio
               </Button>
-            </div>
-            <div className="carholder">
-              <Typography className="title" variant="h3">
-                Top Tip for Best Results with KarStudio
-              </Typography>
-              <Typography className="para" sx={{ marginBottom: "1.25rem" }}>
-                Did you know that vehicles photographed using KarStudio can
-                boost interaction rates by up to 52%? Proper photography ensures
-                your car photos look more realistic and stunning.
-              </Typography>
-              <Typography className="para">
-                Don't miss out! Scroll left to view our step-by-step vehicle
-                photography guide and transform your car listings today.
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{ marginTop: "3rem" }}
-                className="learMore"
-              >
-                Kar Studio
-              </Button>
+              <Box className="photoBox use-slider">
+                <Box className="item cross">
+                  <img className=" photoRes"  alt="test" src={LocalImages.Photo1} />
+                  <img
+                    alt="test"
+                    className="crossIcon setImage"
+                    src={LocalImages.CROSSICON}
+                  />
+                </Box>
+                <Box className="item wright ">
+                  <img alt="test" className="photoRes"  src={LocalImages.Photo2} />
+                  <img
+                    alt="test"
+                    className="wrigthIcon setImage"
+                    src={LocalImages.WRIGHTICON}
+                  />
+                </Box>
+              </Box>
             </div>
           </Slider>
         </Box>
@@ -156,10 +206,12 @@ const Contact = () => {
       <Box
         className="common-section paddingTop24 paddingBottom34 pinkbg"
         sx={slickStyle.Photography}
+        style={{ marginTop: '40px'}}
       >
         <Typography
           className="title"
           variant="h3"
+          classes=' recommendedas'
           sx={{
             display: "flex",
             alignItems: "center",
@@ -171,20 +223,19 @@ const Contact = () => {
             textTransform: "capitalize !important",
           }}
         >
-          <img alt="test" src={LocalImages.WRIGHTICONHEADING} /> Recommended
+          <img style={{
+             "@media(max-Width: 640px)": {
+              width:"1rem",
+             },
+          }} alt="test" src={LocalImages.WRIGHTICONHEADING} /> 
+          Recommended
           Images Examples
         </Typography>
-        <Typography
-          className="subtitle"
-          sx={{
-            fontSize: "1.5rem !important",
-            lineHeight: "4.5625rem !important",
-            fontWeight: "400 !important",
-            textAlign: "center",
-          }}
+        <p
+          className="examples"
         >
           Recommended examples to Elevate Your Images when using KarStudio
-        </Typography>
+        </p>
         <Box className="container">
           <Box
             className="photographyCove recommendedsection"
@@ -194,10 +245,10 @@ const Contact = () => {
               <Box className="photography photographyRight">
                 <Box className="photoBox">
                   <Box className="item wright">
-                    <img alt="test" src={LocalImages.Slider1} />
+                    <img  alt="test" src={LocalImages.Slider1} />
                     <img
                       alt="test"
-                      className="wrigthIcon"
+                      className="wrigthIcon rightResponsive"
                       src={LocalImages.WRIGHTICON}
                     />
                   </Box>
@@ -205,7 +256,7 @@ const Contact = () => {
                     <img alt="test" src={LocalImages.Slider2} />
                     <img
                       alt="test"
-                      className="wrigthIcon"
+                      className="wrigthIcon rightResponsive"
                       src={LocalImages.WRIGHTICON}
                     />
                   </Box>
@@ -266,7 +317,7 @@ const Contact = () => {
       </Box>
 
       <Box
-        className="common-section paddingTop64 whitebg"
+        className="common-section paddingTop64 whitebg keyTips"
         sx={slickStyle.Photography}
       >
         <Typography
@@ -282,21 +333,16 @@ const Contact = () => {
             lineHeight: "4.5625rem !important",
             fontWeight: "700 !important",
           }}
+          
         >
           <img alt="test" src={LocalImages.WRIGHTICONHEADING} /> key tips top
           avoid
         </Typography>
-        <Typography
-          className="subtitle"
-          sx={{
-            fontSize: "1.5rem !important",
-            lineHeight: "4.5625rem !important",
-            fontWeight: "400 !important",
-            textAlign: "center",
-          }}
+        <p
+          className="examples"
         >
           Don’t miss these essential do’s and don’ts for mastering KarStudio.
-        </Typography>
+        </p>
         <Box className="container">
           <Box
             className="photographyCove"
@@ -312,12 +358,35 @@ const Contact = () => {
                     <img alt="test" src={LocalImages.Slider4} />
                     <img
                       alt="test"
-                      className="crossIcon"
+                      className="crossIcon rightResponsive"
                       src={LocalImages.CROSSICON}
                     />
                   </Box>
                   <Box className="item wright">
                     <img alt="test" src={LocalImages.Slider5} />
+                    <img
+                      alt="test"
+                      className="wrigthIcon rightResponsive"
+                      src={LocalImages.WRIGHTICON}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                className="photography photographyLeft"
+                sx={{ backgroundColor: "var(--white) !important" }}
+              >
+                <Box className="photoBox">
+                  <Box className="item cross">
+                    <img alt="test" src={LocalImages.Photo1} />
+                    <img
+                      alt="test"
+                      className="crossIcon"
+                      src={LocalImages.CROSSICON}
+                    />
+                  </Box>
+                  <Box className="item wright">
+                    <img alt="test" src={LocalImages.Photo2} />
                     <img
                       alt="test"
                       className="wrigthIcon"
@@ -332,7 +401,7 @@ const Contact = () => {
               >
                 <Box className="photoBox">
                   <Box className="item cross">
-                    <img alt="test" src={LocalImages.Slider4} />
+                    <img alt="test" src={LocalImages.Image1} />
                     <img
                       alt="test"
                       className="crossIcon"
@@ -340,7 +409,76 @@ const Contact = () => {
                     />
                   </Box>
                   <Box className="item wright">
-                    <img alt="test" src={LocalImages.Slider5} />
+                    <img alt="test" src={LocalImages.Image2} />
+                    <img
+                      alt="test"
+                      className="wrigthIcon"
+                      src={LocalImages.WRIGHTICON}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+               <Box
+                className="photography photographyLeft"
+                sx={{ backgroundColor: "var(--white) !important" }}
+              >
+                <Box className="photoBox">
+                  <Box className="item cross">
+                    <img alt="test" src={LocalImages.Image3} />
+                    <img
+                      alt="test"
+                      className="crossIcon"
+                      src={LocalImages.CROSSICON}
+                    />
+                  </Box>
+                  <Box className="item wright">
+                    <img alt="test" src={LocalImages.Image4} />
+                    <img
+                      alt="test"
+                      className="wrigthIcon"
+                      src={LocalImages.WRIGHTICON}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+               <Box
+                className="photography photographyLeft"
+                sx={{ backgroundColor: "var(--white) !important" }}
+              >
+                <Box className="photoBox">
+                  <Box className="item cross">
+                    <img alt="test" src={LocalImages.Image15} />
+                    <img
+                      alt="test"
+                      className="crossIcon"
+                      src={LocalImages.CROSSICON}
+                    />
+                  </Box>
+                  <Box className="item wright">
+                    <img alt="test" src={LocalImages.Image4} />
+                    <img
+                      alt="test"
+                      className="wrigthIcon"
+                      src={LocalImages.WRIGHTICON}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+               <Box
+                className="photography photographyLeft"
+                sx={{ backgroundColor: "var(--white) !important" }}
+              >
+                <Box className="photoBox">
+                  <Box className="item cross">
+                    <img alt="test" src={LocalImages.Image5} />
+                    <img
+                      alt="test"
+                      className="crossIcon"
+                      src={LocalImages.CROSSICON}
+                    />
+                  </Box>
+                  <Box className="item wright">
+                    <img alt="test" src={LocalImages.Image6} />
                     <img
                       alt="test"
                       className="wrigthIcon"
@@ -355,7 +493,7 @@ const Contact = () => {
               >
                 <Box className="photoBox">
                   <Box className="item cross">
-                    <img alt="test" src={LocalImages.Slider4} />
+                    <img alt="test" src={LocalImages.Image7} />
                     <img
                       alt="test"
                       className="crossIcon"
@@ -363,7 +501,7 @@ const Contact = () => {
                     />
                   </Box>
                   <Box className="item wright">
-                    <img alt="test" src={LocalImages.Slider5} />
+                    <img alt="test" src={LocalImages.Image8} />
                     <img
                       alt="test"
                       className="wrigthIcon"
@@ -372,6 +510,75 @@ const Contact = () => {
                   </Box>
                 </Box>
               </Box>
+              <Box
+                className="photography photographyLeft"
+                sx={{ backgroundColor: "var(--white) !important" }}
+              >
+                <Box className="photoBox">
+                  <Box className="item cross">
+                    <img alt="test" src={LocalImages.Image9} />
+                    <img
+                      alt="test"
+                      className="crossIcon"
+                      src={LocalImages.CROSSICON}
+                    />
+                  </Box>
+                  <Box className="item wright">
+                    <img alt="test" src={LocalImages.Image10} />
+                    <img
+                      alt="test"
+                      className="wrigthIcon"
+                      src={LocalImages.WRIGHTICON}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                className="photography photographyLeft"
+                sx={{ backgroundColor: "var(--white) !important" }}
+              >
+                <Box className="photoBox">
+                  <Box className="item cross">
+                    <img alt="test" src={LocalImages.Image16} />
+                    <img
+                      alt="test"
+                      className="crossIcon"
+                      src={LocalImages.CROSSICON}
+                    />
+                  </Box>
+                  <Box className="item wright">
+                    <img alt="test" src={LocalImages.Image11} />
+                    <img
+                      alt="test"
+                      className="wrigthIcon"
+                      src={LocalImages.WRIGHTICON}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                className="photography photographyLeft"
+                sx={{ backgroundColor: "var(--white) !important" }}
+              >
+                <Box className="photoBox">
+                  <Box className="item cross">
+                    <img alt="test" src={LocalImages.Image12} />
+                    <img
+                      alt="test"
+                      className="crossIcon"
+                      src={LocalImages.CROSSICON}
+                    />
+                  </Box>
+                  <Box className="item wright">
+                    <img alt="test" src={LocalImages.Image13} />
+                    <img
+                      alt="test"
+                      className="wrigthIcon"
+                      src={LocalImages.WRIGHTICON}
+                    />
+                  </Box>
+                </Box>
+              </Box> 
             </Slider>
           </Box>
         </Box>
@@ -380,7 +587,7 @@ const Contact = () => {
       <Box className="common-section" sx={{backgroundColor:"#ECE0EA"}}>
       <Box className="container">
 <Box sx={{textAlign:"center", display:"flex", justifyContent:"center", flexWrap:"wrap"}}>
-<Typography sx={{display:"block", width:"100%",fontSize: "3rem",
+<Typography className="good" sx={{display:"block", width:"100%",fontSize: "3rem",
                   fontWeight: "700",
                   lineHeight: "3.4469rem",}}>GOOD
 PHOTOGRAPH
